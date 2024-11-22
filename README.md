@@ -164,3 +164,260 @@
 - Help documentation
 - FAQ section
 - Contact forms
+
+
+
+
+
+// Users Collection - Base user information
+{
+  _id: ObjectId,
+  email: String,
+  password: String,  // hashed
+  phoneNumber: String,
+  role: String,      // enum: ["admin", "doctor", "patient"]
+  firstName: String,
+  lastName: String,
+  profileImage: String,
+  isEmailVerified: Boolean,
+  isPhoneVerified: Boolean,
+  isActive: Boolean,
+  createdAt: Date,
+  updatedAt: Date,
+  lastLogin: Date,
+  notifications: {
+    email: Boolean,
+    sms: Boolean,
+    push: Boolean
+  }
+}
+
+// Doctor Profiles Collection
+{
+  _id: ObjectId,
+  userId: ObjectId,        // reference to Users collection
+  specialization: [String],
+  qualifications: [{
+    degree: String,
+    institution: String,
+    year: Number,
+    certificate: String    // file URL
+  }],
+  experience: Number,
+  aboutMe: String,
+  clinicInfo: {
+    name: String,
+    address: String,
+    location: {
+      type: "Point",
+      coordinates: [Number]  // [longitude, latitude]
+    }
+  },
+  consultationFee: Number,
+  languages: [String],
+  availability: {
+    monday: [{ startTime: String, endTime: String }],
+    tuesday: [{ startTime: String, endTime: String }],
+    // ... other days
+  },
+  rating: Number,
+  totalRatings: Number,
+  isVerified: Boolean,
+  documents: [{
+    type: String,
+    url: String,
+    uploadedAt: Date
+  }],
+  bankDetails: {
+    accountNumber: String,
+    bankName: String,
+    ifscCode: String
+  }
+}
+
+// Patient Profiles Collection
+{
+  _id: ObjectId,
+  userId: ObjectId,        // reference to Users collection
+  dateOfBirth: Date,
+  gender: String,
+  bloodGroup: String,
+  allergies: [String],
+  chronicDiseases: [String],
+  emergencyContacts: [{
+    name: String,
+    relationship: String,
+    phone: String
+  }],
+  medicalHistory: [{
+    condition: String,
+    diagnosis: Date,
+    medications: [String],
+    documents: [String]    // file URLs
+  }]
+}
+
+// Appointments Collection
+{
+  _id: ObjectId,
+  doctorId: ObjectId,     // reference to Doctor Profiles
+  patientId: ObjectId,    // reference to Patient Profiles
+  dateTime: Date,
+  duration: Number,       // in minutes
+  status: String,         // enum: ["scheduled", "completed", "cancelled", "no-show"]
+  type: String,          // enum: ["video", "chat"]
+  fees: Number,
+  paymentStatus: String, // enum: ["pending", "completed", "refunded"]
+  paymentId: ObjectId,   // reference to Payments collection
+  notes: String,
+  prescription: {
+    medications: [{
+      name: String,
+      dosage: String,
+      duration: String,
+      instructions: String
+    }],
+    advice: String,
+    followUpDate: Date
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// Availability Slots Collection
+{
+  _id: ObjectId,
+  doctorId: ObjectId,
+  date: Date,
+  slots: [{
+    startTime: String,
+    endTime: String,
+    isBooked: Boolean,
+    appointmentId: ObjectId  // reference to Appointments if booked
+  }]
+}
+
+// Payments Collection
+{
+  _id: ObjectId,
+  appointmentId: ObjectId,
+  patientId: ObjectId,
+  doctorId: ObjectId,
+  amount: Number,
+  platformFee: Number,
+  paymentMethod: String,
+  transactionId: String,
+  status: String,        // enum: ["pending", "completed", "failed", "refunded"]
+  refundDetails: {
+    amount: Number,
+    reason: String,
+    date: Date
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// Reviews Collection
+{
+  _id: ObjectId,
+  doctorId: ObjectId,
+  patientId: ObjectId,
+  appointmentId: ObjectId,
+  rating: Number,        // 1-5
+  review: String,
+  reply: String,        // doctor's reply
+  isVerified: Boolean,
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// Chat Messages Collection
+{
+  _id: ObjectId,
+  conversationId: ObjectId,  // reference to Conversations collection
+  senderId: ObjectId,
+  receiverId: ObjectId,
+  messageType: String,      // enum: ["text", "image", "document", "video"]
+  content: String,
+  fileUrl: String,         // for documents/images
+  fileName: String,
+  fileSize: Number,
+  isRead: Boolean,
+  readAt: Date,
+  createdAt: Date
+}
+
+// Conversations Collection
+{
+  _id: ObjectId,
+  doctorId: ObjectId,
+  patientId: ObjectId,
+  lastMessage: {
+    content: String,
+    senderId: ObjectId,
+    timestamp: Date
+  },
+  isActive: Boolean,
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// Medical Reports Collection
+{
+  _id: ObjectId,
+  patientId: ObjectId,
+  uploadedBy: ObjectId,    // can be patient or doctor
+  type: String,           // enum: ["lab_report", "prescription", "imaging", "other"]
+  title: String,
+  description: String,
+  fileUrl: String,
+  fileType: String,       // mime type
+  fileSize: Number,
+  sharedWith: [{
+    doctorId: ObjectId,
+    sharedAt: Date,
+    access: Boolean       // can be revoked
+  }],
+  tags: [String],
+  createdAt: Date,
+  updatedAt: Date
+}
+
+// Notifications Collection
+{
+  _id: ObjectId,
+  userId: ObjectId,
+  type: String,          // enum: ["appointment", "message", "payment", "report"]
+  title: String,
+  message: String,
+  relatedId: ObjectId,   // ID of related document (appointment, message, etc.)
+  isRead: Boolean,
+  createdAt: Date
+}
+
+// Indexes
+{
+  // Users Collection
+  "email": 1,            // unique
+  "phoneNumber": 1,      // unique
+  
+  // Doctor Profiles Collection
+  "userId": 1,           // unique
+  "specialization": 1,   // for searching
+  "location": "2dsphere" // for geo-queries
+  
+  // Appointments Collection
+  "doctorId": 1,
+  "patientId": 1,
+  "dateTime": 1
+  
+  // Chat Messages Collection
+  "conversationId": 1,
+  "senderId": 1,
+  "receiverId": 1,
+  "createdAt": 1
+  
+  // Medical Reports Collection
+  "patientId": 1,
+  "sharedWith.doctorId": 1
+}
