@@ -17,6 +17,11 @@ const Topbar = () => {
       });
     }
   });
+
+  const logoutHandler = async () => {
+    console.log("test logout");
+    await postAPI("logout", { name: "logout" });
+  };
   return (
     <>
       <Helmet>
@@ -421,7 +426,7 @@ const Topbar = () => {
                 <h6 className="m-0">James Bruton</h6>
               </div>
               <div className="mx-3 my-2 d-grid">
-                <a href="/" className="btn btn-danger">
+                <a href="#" onClick={logoutHandler} className="btn btn-danger">
                   Logout
                 </a>
               </div>

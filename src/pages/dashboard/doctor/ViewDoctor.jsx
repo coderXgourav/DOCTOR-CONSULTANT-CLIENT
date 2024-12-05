@@ -26,7 +26,7 @@ const ViewDoctor = () => {
                   className="breadcrumb-item text-primary"
                   aria-current="page"
                 >
-                  Doctors Cards
+                  Patients List
                 </li>
               </ol>
               {/* Breadcrumb ends */}
@@ -49,363 +49,132 @@ const ViewDoctor = () => {
             <div className="app-body">
               {/* Row starts */}
               <div className="row gx-3">
-                <div className="col-sm-12 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      {/* Row starts */}
-                      <div className="d-flex align-items-end gap-2">
-                        <div className="m-0">
-                          <label className="form-label" htmlFor="a1">
-                            Doctor Name
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="a1"
-                            placeholder="Search By Doctors Name"
-                          />
-                        </div>
-                        <div className="m-0">
-                          <label className="form-label" htmlFor="a2">
-                            Department
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="a2"
-                            placeholder="Search By Department"
-                          />
-                        </div>
-                        <div className="m-0">
-                          <button className="btn btn-primary">Search</button>
-                        </div>
-                      </div>
-                      {/* Row ends */}
+                <div className="col-sm-12">
+                  <div className="card">
+                    <div className="card-header d-flex align-items-center justify-content-between">
+                      <h5 className="card-title">Doctores List</h5>
+                      <a
+                        href="add-patient.html"
+                        className="btn btn-primary ms-auto"
+                      >
+                        Add Doctor
+                      </a>
                     </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
                     <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
+                      {/* Table starts */}
+                      <div className="table-responsive">
+                        <table
+                          id="basicExample"
+                          className="table truncate m-0 align-middle"
                         >
-                          <img
-                            src="assets/images/user1.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. Clive Nathan</h5>
-                          <h6 className="text-truncate">
-                            Gynecologist, General Physician
-                          </h6>
-                          <p>8 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly5" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
+                          <thead>
+                            <tr>
+                              <th>No.</th>
+                              <th>Doctor Name</th>
+                              <th>Gender</th>
+                              <th>Exprience</th>
+                              <th>Mobile</th>
+                              <th>Email</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>#89990</td>
+                              <td>
+                                <img
+                                  src="assets/images/patient.png"
+                                  className="img-shadow img-2x rounded-5 me-1"
+                                  alt="Medical Admin Template"
+                                />
+                                Allan Stuart
+                              </td>
+                              <td>
+                                <span className="badge bg-info-subtle text-info">
+                                  Male
+                                </span>
+                              </td>
+                              <td>2 Years</td>
+                              <td>0987654321</td>
+                              <td>test@testing.com</td>
+                              <td>
+                                <div className="d-inline-flex gap-1">
+                                  <button
+                                    className="btn btn-outline-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#delRow"
+                                  >
+                                    <i className="ri-delete-bin-line" />
+                                  </button>
+                                  <a
+                                    href="edit-patient.html"
+                                    className="btn btn-outline-success btn-sm"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    data-bs-title="Edit Patient Details"
+                                  >
+                                    <i className="ri-edit-box-line" />
+                                  </a>
+                                  <a
+                                    href="/doctor"
+                                    className="btn btn-outline-info btn-sm"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    data-bs-title="View Dashboard"
+                                  >
+                                    <i className="ri-eye-line" />
+                                  </a>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user2.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. Laura Jaden</h5>
-                          <h6>Plastic Surgeon</h6>
-                          <p>9 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly5" />
+                      {/* Table ends */}
+                      {/* Modal Delete Row */}
+                      <div
+                        className="modal fade"
+                        id="delRow"
+                        tabIndex={-1}
+                        aria-labelledby="delRowLabel"
+                        aria-hidden="true"
+                      >
+                        <div className="modal-dialog modal-sm">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5 className="modal-title" id="delRowLabel">
+                                Confirm
+                              </h5>
+                              <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              />
+                            </div>
+                            <div className="modal-body">
+                              Are you sure you want to delete the patient?
+                            </div>
+                            <div className="modal-footer">
+                              <div className="d-flex justify-content-end gap-2">
+                                <button
+                                  className="btn btn-outline-secondary"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  No
+                                </button>
+                                <button
+                                  className="btn btn-danger"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  Yes
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user3.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. Aliko Maria</h5>
-                          <h6>Physiotherapist</h6>
-                          <p>6 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly5" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user4.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. Amelia Kim</h5>
-                          <h6>Gastroenterologist</h6>
-                          <p>7 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly4" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user5.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. Emma Monis</h5>
-                          <h6>General Surgeon</h6>
-                          <p>5 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly5" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. Olivia</h5>
-                          <h6>Bariatric Surgeon</h6>
-                          <p>8 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly5" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user1.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. Kelly Phong</h5>
-                          <h6>Ophthalmologist</h6>
-                          <p>9 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly4" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user3.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. George Max</h5>
-                          <h6>Dermatologist</h6>
-                          <p>3 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly5" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user4.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. Taylor</h5>
-                          <h6>Radiologist</h6>
-                          <p>8 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly3" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user2.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. Bailey</h5>
-                          <h6>Dentist</h6>
-                          <p>8 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly5" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user5.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. OSullivan</h5>
-                          <h6>Laparoscopic Surgeon</h6>
-                          <p>5 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly5" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-xxl-3 col-sm-6 col-12">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <div className="text-center">
-                        <a
-                          href="doctors-profile.html"
-                          className="d-flex align-items-center flex-column"
-                        >
-                          <img
-                            src="assets/images/user.png"
-                            alt="Hospitals Admin Template"
-                            className="img-7x rounded-circle mb-3"
-                          />
-                          <h5>Dr. OBrien Bui</h5>
-                          <h6>Spine Surgeon</h6>
-                          <p>6 Years Experience</p>
-                        </a>
-                        <div className="rating-stars m-auto mb-3">
-                          <div className="readonly5" />
-                        </div>
-                        <a href="/doctor" className="btn btn-primary">
-                          View Profile
-                        </a>
                       </div>
                     </div>
                   </div>

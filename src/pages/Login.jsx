@@ -1,14 +1,7 @@
 import { useState } from "react";
 import { login } from "../API/commonAPI";
 import { Spin } from "antd";
-// import {
-//   BorderBottomOutlined,
-//   BorderTopOutlined,
-//   RadiusBottomleftOutlined,
-//   RadiusBottomrightOutlined,
-//   RadiusUpleftOutlined,
-//   RadiusUprightOutlined,
-// } from "@ant-design/icons";
+
 import { notification } from "antd";
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -37,6 +30,8 @@ const Login = () => {
     setBtn("Please wait..");
     if (!username || !password) {
       openNotification(false, "Fill Details", "Please fill all the fields");
+      setLoading(false);
+      setBtn("Login");
     } else {
       const response = await login("login", "POST", {
         email_username: username,

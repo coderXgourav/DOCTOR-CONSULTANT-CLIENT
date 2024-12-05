@@ -46,6 +46,8 @@ const postAPI = async (url, data) => {
     const { status, message, desc } = result?.data;
     return { status, message, desc };
   } catch (error) {
+    console.log(error);
+    console.log(error.message);
     if (error?.response?.data?.status === false) {
       const { status, message, desc } = error?.response?.data;
       return { status, message, desc };
