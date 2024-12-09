@@ -1,7 +1,36 @@
+import { useState } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Topbar from "../../../components/Topbar";
 
 const AddDoctor = () => {
+  const [doctor, setDoctor] = useState({
+    firstName: "",
+    lastName: "",
+    age: "",
+    gender: "",
+    email: "",
+    mobile: "",
+    photo: "",
+    specialization: "",
+    experience: "",
+    qualifications: "",
+    license: "",
+    sun1: "",
+    sun2: "",
+    mon1: "",
+    mon2: "",
+    tue1: "",
+    tue2: "",
+    wed1: "",
+    wed2: "",
+    thu1: "",
+    thu2: "",
+    fri1: "",
+    fri2: "",
+    sat1: "",
+    sat2: "",
+  });
+
   return (
     <>
       <div className="page-wrapper">
@@ -378,7 +407,7 @@ const AddDoctor = () => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="col-xxl-3 col-lg-4 col-sm-6">
+                              {/* <div className="col-xxl-3 col-lg-4 col-sm-6">
                                 <div className="mb-3">
                                   <label className="form-label" htmlFor="a2">
                                     Upload Medical License
@@ -392,7 +421,7 @@ const AddDoctor = () => {
                                     />
                                   </div>
                                 </div>
-                              </div>
+                              </div> */}
                             </div>
 
                             {/* Row ends */}
