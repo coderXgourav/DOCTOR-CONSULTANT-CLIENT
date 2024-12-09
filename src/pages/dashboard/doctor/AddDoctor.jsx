@@ -30,7 +30,7 @@ const AddDoctor = () => {
     sat1: "",
     sat2: "",
   });
-
+  const formChange = () => {};
   return (
     <>
       <div className="page-wrapper">
@@ -184,7 +184,8 @@ const AddDoctor = () => {
                                     </span>
                                     <input
                                       type="text"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                       id="a1"
                                       placeholder="Enter First Name"
                                     />
@@ -203,7 +204,8 @@ const AddDoctor = () => {
                                     </span>
                                     <input
                                       type="text"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                       id="a2"
                                       placeholder="Enter Last Name"
                                     />
@@ -222,7 +224,8 @@ const AddDoctor = () => {
                                     <input
                                       type="text"
                                       placeholder="Type Number"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                     />
                                   </div>
                                 </div>
@@ -239,7 +242,11 @@ const AddDoctor = () => {
                                     <span className="input-group-text">
                                       <i className="ri-flower-line" />
                                     </span>
-                                    <select className="form-select" id="a3">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="a3"
+                                    >
                                       <option value="">Select Age</option>
                                       <option value="Male">Male</option>
                                       <option value="Female">Female</option>
@@ -260,7 +267,8 @@ const AddDoctor = () => {
                                     </span>
                                     <input
                                       type="email"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                       id="a5"
                                       placeholder="Enter Email ID"
                                     />
@@ -279,7 +287,8 @@ const AddDoctor = () => {
                                     </span>
                                     <input
                                       type="text"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                       id="a6"
                                       placeholder="Enter Mobile Number"
                                     />
@@ -298,7 +307,8 @@ const AddDoctor = () => {
                                     </span> */}
                                     <input
                                       type="file"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                       id="a6"
                                       placeholder="Enter Mobile Number"
                                     />
@@ -325,7 +335,11 @@ const AddDoctor = () => {
                                     <span className="input-group-text">
                                       <i className="ri-flower-line" />
                                     </span>
-                                    <select className="form-select" id="a3">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="a3"
+                                    >
                                       <option value={0}>
                                         Select Specialization
                                       </option>
@@ -351,7 +365,11 @@ const AddDoctor = () => {
                                     <span className="input-group-text">
                                       <i className="ri-flower-line" />
                                     </span>
-                                    <select className="form-select" id="a3">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="a3"
+                                    >
                                       <option value={0}>
                                         Years of Experience
                                       </option>
@@ -377,7 +395,11 @@ const AddDoctor = () => {
                                     <span className="input-group-text">
                                       <i className="ri-flower-line" />
                                     </span>
-                                    <select className="form-select" id="a3">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="a3"
+                                    >
                                       <option value={0}>
                                         Select Qualifications{" "}
                                       </option>
@@ -400,7 +422,8 @@ const AddDoctor = () => {
                                     </span>
                                     <input
                                       type="text"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                       id="a1"
                                       placeholder="Type Registration Number"
                                     />
@@ -416,7 +439,7 @@ const AddDoctor = () => {
                                   <div className="input-group">
                                     <input
                                       type="file"
-                                      className="form-control"
+                                      className="form-select" onChange={formChange}
                                       id="a2"
                                     />
                                   </div>
@@ -439,13 +462,21 @@ const AddDoctor = () => {
                                     Sun
                                   </label>
                                   <div className="input-group">
-                                    <select className="form-select" id="d1">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d1"
+                                    >
                                       <option value={0}>From</option>
                                       <option value={1}>7AM</option>
                                       <option value={2}>8AM</option>
                                       <option value={3}>9AM</option>
                                     </select>
-                                    <select className="form-select" id="d1X">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d1X"
+                                    >
                                       <option value={0}>To</option>
                                       <option value={1}>3PM</option>
                                       <option value={2}>4PM</option>
@@ -460,13 +491,21 @@ const AddDoctor = () => {
                                     Mon
                                   </label>
                                   <div className="input-group">
-                                    <select className="form-select" id="d2">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d2"
+                                    >
                                       <option value={0}>From</option>
                                       <option value={1}>7AM</option>
                                       <option value={2}>8AM</option>
                                       <option value={3}>9AM</option>
                                     </select>
-                                    <select className="form-select" id="d2X">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d2X"
+                                    >
                                       <option value={0}>To</option>
                                       <option value={1}>3PM</option>
                                       <option value={2}>4PM</option>
@@ -481,13 +520,21 @@ const AddDoctor = () => {
                                     Tue
                                   </label>
                                   <div className="input-group">
-                                    <select className="form-select" id="d3">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d3"
+                                    >
                                       <option value={0}>From</option>
                                       <option value={1}>7AM</option>
                                       <option value={2}>8AM</option>
                                       <option value={3}>9AM</option>
                                     </select>
-                                    <select className="form-select" id="d3X">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d3X"
+                                    >
                                       <option value={0}>To</option>
                                       <option value={1}>3PM</option>
                                       <option value={2}>4PM</option>
@@ -502,13 +549,21 @@ const AddDoctor = () => {
                                     Wed
                                   </label>
                                   <div className="input-group">
-                                    <select className="form-select" id="d4">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d4"
+                                    >
                                       <option value={0}>From</option>
                                       <option value={1}>7AM</option>
                                       <option value={2}>8AM</option>
                                       <option value={3}>9AM</option>
                                     </select>
-                                    <select className="form-select" id="d4X">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d4X"
+                                    >
                                       <option value={0}>To</option>
                                       <option value={1}>3PM</option>
                                       <option value={2}>4PM</option>
@@ -523,13 +578,21 @@ const AddDoctor = () => {
                                     Thu
                                   </label>
                                   <div className="input-group">
-                                    <select className="form-select" id="d5">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d5"
+                                    >
                                       <option value={0}>From</option>
                                       <option value={1}>7AM</option>
                                       <option value={2}>8AM</option>
                                       <option value={3}>9AM</option>
                                     </select>
-                                    <select className="form-select" id="d5X">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d5X"
+                                    >
                                       <option value={0}>To</option>
                                       <option value={1}>3PM</option>
                                       <option value={2}>4PM</option>
@@ -544,13 +607,21 @@ const AddDoctor = () => {
                                     Fri
                                   </label>
                                   <div className="input-group">
-                                    <select className="form-select" id="d6">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d6"
+                                    >
                                       <option value={0}>From</option>
                                       <option value={1}>7AM</option>
                                       <option value={2}>8AM</option>
                                       <option value={3}>9AM</option>
                                     </select>
-                                    <select className="form-select" id="d6X">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d6X"
+                                    >
                                       <option value={0}>To</option>
                                       <option value={1}>3PM</option>
                                       <option value={2}>4PM</option>
@@ -565,13 +636,21 @@ const AddDoctor = () => {
                                     Sat
                                   </label>
                                   <div className="input-group">
-                                    <select className="form-select" id="d7">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d7"
+                                    >
                                       <option value={0}>From</option>
                                       <option value={1}>7AM</option>
                                       <option value={2}>8AM</option>
                                       <option value={3}>9AM</option>
                                     </select>
-                                    <select className="form-select" id="d7X">
+                                    <select
+                                      className="form-select"
+                                      onChange={formChange}
+                                      id="d7X"
+                                    >
                                       <option value={0}>To</option>
                                       <option value={1}>3PM</option>
                                       <option value={2}>4PM</option>
@@ -603,7 +682,8 @@ const AddDoctor = () => {
                                       type="text"
                                       id="u1"
                                       placeholder="Enter username"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                     />
                                   </div>
                                 </div>
@@ -620,7 +700,8 @@ const AddDoctor = () => {
                                     <input
                                       type="password"
                                       id="u2"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                       placeholder="Password must be 8-20 characters long."
                                     />
                                     <button
@@ -645,7 +726,8 @@ const AddDoctor = () => {
                                       type="password"
                                       id="u3"
                                       placeholder="Confirm new password"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                     />
                                     <button
                                       className="btn btn-outline-secondary"
@@ -679,7 +761,8 @@ const AddDoctor = () => {
                                       type="text"
                                       id="u1"
                                       placeholder="Enter username"
-                                      className="form-control"
+                                      className="form-select"
+                                      onChange={formChange}
                                     />
                                   </div>
                                 </div>
