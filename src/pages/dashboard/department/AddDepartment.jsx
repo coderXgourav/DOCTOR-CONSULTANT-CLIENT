@@ -95,6 +95,7 @@ const AddDepartment = () => {
               </div>
               {/* Sales stats ends */}
             </div>
+
             {/* App Hero header ends */}
             {/* App body starts */}
             <Spin spinning={loading} size="large">
@@ -104,8 +105,14 @@ const AddDepartment = () => {
                   <div className="row gx-3">
                     <div className="col-sm-12">
                       <div className="card">
-                        <div className="card-header">
-                          <h5 className="card-title">Add Department</h5>
+                        <div className="card-header d-flex align-items-center justify-content-between">
+                          <h5 className="card-title">Add New Department</h5>
+                          <a
+                            href="/view-department"
+                            className="btn btn-primary ms-auto"
+                          >
+                            View Department
+                          </a>
                         </div>
                         <div className="card-body">
                           {/* Row starts */}

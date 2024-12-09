@@ -3,8 +3,10 @@ import Topbar from "../../../components/Topbar";
 import { getAPI, deleteAPI } from "../../../API/commonAPI";
 import { useState, useEffect } from "react";
 import { Spin } from "antd";
+import { notification } from "antd";
 
 const ViewDepartment = () => {
+  const [api, contextHolder] = notification.useNotification();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState(null);
@@ -20,15 +22,36 @@ const ViewDepartment = () => {
     fetchDepartment();
   }, []);
 
+  const openNotification = (status, title, desc) => {
+    if (status) {
+      api.success({
+        message: title,
+        description: desc,
+      });
+    } else {
+      api.error({
+        message: title,
+        description: desc,
+      });
+    }
+  };
+
   const deleteDepartment = (id) => {
     setId(id);
   };
-  const confirmDelete = (deleteId) => {
-    deleteAPI("department/delete-department", { id: deleteId });
+  const confirmDelete = async (deleteId) => {
+    const result = await deleteAPI(`department/delete-department/${deleteId}`);
+    const { status, message, desc } = result;
+    if (status) {
+      fetchDepartment();
+    }
+
+    openNotification(status, message, desc);
   };
 
   return (
     <>
+      {contextHolder}
       <div className="page-wrapper">
         {/* App header starts */}
         <Topbar />

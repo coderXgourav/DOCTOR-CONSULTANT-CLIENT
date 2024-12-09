@@ -98,6 +98,7 @@ const deleteAPI = async (url, data) => {
         },
       }
     );
+
     const { status, message, desc } = result?.data;
     return { status, message, desc };
   } catch (error) {
