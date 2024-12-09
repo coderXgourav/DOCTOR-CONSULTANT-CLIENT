@@ -67,12 +67,12 @@ const Login = () => {
           <form onSubmit={loginHandler}>
             <div className="auth-box">
               <a href="index-2.html" className="auth-logo mb-4">
-                <img
+                {/* <img
                   src="https://cdn.worldvectorlogo.com/logos/lorem-lorem.svg"
                   alt="Bootstrap Gallery"
-                />
+                /> */}
               </a>
-              <h4 className="mb-4">Login</h4>
+              <h4 className="mb-4">Admin Login</h4>
               <div className="mb-3">
                 <label className="form-label" htmlFor="email">
                   Your email <span className="text-danger">*</span>

@@ -58,11 +58,11 @@ const Topbar = () => {
         {/* App brand starts */}
         <div className="app-brand ms-3 bg-light">
           <a href="/" className="d-lg-block d-none">
-            <img
+            {/* <img
               src="https://cdn.worldvectorlogo.com/logos/lorem-lorem.svg"
               className="logo"
               alt="Medicare Admin Template"
-            />
+            /> */}
           </a>
           <a href="/" className="d-lg-none d-md-block">
             <img

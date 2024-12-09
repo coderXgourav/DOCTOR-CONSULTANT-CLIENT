@@ -1,7 +1,32 @@
 import Sidebar from "../../../components/Sidebar";
 import Topbar from "../../../components/Topbar";
+import { getAPI, deleteAPI } from "../../../API/commonAPI";
+import { useState, useEffect } from "react";
+import { Spin } from "antd";
 
 const ViewDepartment = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [id, setId] = useState(null);
+  let no = 1;
+  const fetchDepartment = async () => {
+    setLoading(true);
+    const result = await getAPI("department/all-department");
+    setData(result);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchDepartment();
+  }, []);
+
+  const deleteDepartment = (id) => {
+    setId(id);
+  };
+  const confirmDelete = (deleteId) => {
+    deleteAPI("department/delete-department", { id: deleteId });
+  };
+
   return (
     <>
       <div className="page-wrapper">
@@ -50,7 +75,7 @@ const ViewDepartment = () => {
             <div className="app-body">
               {/* Row starts */}
               <div className="row gx-3">
-                <div className="col-sm-6">
+                {/* <div className="col-sm-6">
                   <div className="card mb-3">
                     <div className="card-header">
                       <h5 className="card-title">Departments</h5>
@@ -76,7 +101,7 @@ const ViewDepartment = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="col-sm-12">
                   <div className="card">
                     <div className="card-header d-flex align-items-center justify-content-between">
@@ -97,55 +122,80 @@ const ViewDepartment = () => {
                         >
                           <thead>
                             <tr>
-                              <th>#</th>
+                              <th>No</th>
                               <th>Department</th>
                               <th>Doctors List</th>
                               <th>Actions</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>001</td>
-                              <td>Surgeon</td>
-
-                              <td>
-                                <div className="stacked-images">
-                                  <img
-                                    src="assets/images/user.png"
-                                    alt="Medical Dashboard"
-                                  />
-                                  <img
-                                    src="assets/images/user2.png"
-                                    alt="Medical Dashboard"
-                                  />
-                                  <img
-                                    src="assets/images/user3.png"
-                                    alt="Medical Dashboard"
-                                  />
-                                  <span className="plus bg-primary">+5</span>
-                                </div>
+                            {loading ? (
+                              <td colSpan={4} style={{ textAlign: "center" }}>
+                                {" "}
+                                <Spin spinning={loading} size="large"></Spin>
                               </td>
-                              <td>
-                                <div className="d-inline-flex gap-1">
-                                  <button
-                                    className="btn btn-outline-danger btn-sm rounded-5"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#delRow"
-                                  >
-                                    <i className="ri-delete-bin-line" />
-                                  </button>
-                                  <a
-                                    href="edit-department.html"
-                                    className="btn btn-outline-success btn-sm rounded-5"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    data-bs-title="Edit Department"
-                                  >
-                                    <i className="ri-edit-box-line" />
-                                  </a>
-                                </div>
-                              </td>
-                            </tr>
+                            ) : data.length > 0 ? (
+                              data.map((item) => (
+                                <tr key={item._id}>
+                                  <td>{no++}</td>
+                                  <td>{item.department}</td>
+                                  <td>
+                                    <div className="stacked-images">
+                                      <img
+                                        src="assets/images/user.png"
+                                        alt="Medical Dashboard"
+                                      />
+                                      <img
+                                        src="assets/images/user2.png"
+                                        alt="Medical Dashboard"
+                                      />
+                                      <img
+                                        src="assets/images/user3.png"
+                                        alt="Medical Dashboard"
+                                      />
+                                      <span className="plus bg-primary">
+                                        +5
+                                      </span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div className="d-inline-flex gap-1">
+                                      <button
+                                        className="btn btn-outline-danger btn-sm rounded-5"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#delRow"
+                                        onClick={() => {
+                                          deleteDepartment(item._id);
+                                        }}
+                                      >
+                                        <i className="ri-delete-bin-line" />
+                                      </button>
+                                      <a
+                                        href="edit-department.html"
+                                        className="btn btn-outline-success btn-sm rounded-5"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Edit Department"
+                                      >
+                                        <i className="ri-edit-box-line" />
+                                      </a>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td
+                                  colSpan={4}
+                                  style={{
+                                    textAlign: "center",
+                                    color: "red",
+                                  }}
+                                >
+                                  Departments not found..
+                                </td>
+                              </tr>
+                            )}
                           </tbody>
                         </table>
                       </div>
@@ -189,6 +239,7 @@ const ViewDepartment = () => {
                                   className="btn btn-danger"
                                   data-bs-dismiss="modal"
                                   aria-label="Close"
+                                  onClick={() => confirmDelete(id)}
                                 >
                                   Yes
                                 </a>
