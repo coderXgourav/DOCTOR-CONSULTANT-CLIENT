@@ -9,11 +9,13 @@ import AddPatient from "./pages/dashboard/patient/AddPatient";
 import AddDepartment from "./pages/dashboard/department/AddDepartment";
 import ViewDepartment from "./pages/dashboard/department/ViewDepartment";
 import Soon from "./pages/Soon";
+// import GlobalHelmet from "./components/GlobalHelmet";
 
 function App() {
   return (
     <>
       <Router>
+        {/* <GlobalHelmet /> */}
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/login" element={<Login />}></Route>

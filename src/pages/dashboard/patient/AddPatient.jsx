@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Sidebar from "../../../components/Sidebar";
 import Topbar from "../../../components/Topbar";
+import { notification } from "antd";
 
 const AddPatient = () => {
+  const [api, contextHolder] = notification.useNotification();
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -16,11 +18,23 @@ const AddPatient = () => {
     address: "",
   });
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  // const [success, setSuccess] = useState("");
   // const navigate = useNavigate();
 
-  
+  const openNotification = (status, title, desc) => {
+    if (status) {
+      api.success({
+        message: title,
+        description: desc,
+      });
+    } else {
+      api.error({
+        message: title,
+        description: desc,
+      });
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -30,159 +44,182 @@ const AddPatient = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/patient/add-patient`, formData);
-      setSuccess(response.data.message);
-      setError("");
-      window.location.href = "/view-patients";
-    } catch (error) {
-      setError(
-        error.response?.data?.message || "Something went wrong, try again!"
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/patient/add-patient`,
+        formData
       );
-      setSuccess("");
+      const { status, message, desc } = response.data;
+      openNotification(status, message, desc);
+      setFormData({
+        first_name: "",
+        last_name: "",
+        gender: "",
+        age: "",
+        blood_group: "",
+        treatment: "",
+        mobile: "",
+        email: "",
+        address: "",
+      });
+
+      // window.location.href = "/view-patients";
+    } catch (error) {
+      const { status, message, desc } = error.response.data;
+      openNotification(status, message, desc);
     }
   };
 
   return (
     <div className="page-wrapper">
+      {contextHolder}
       <Topbar />
       <div className="main-container">
         <Sidebar />
-        <div className="app-container">
-          <div className="app-hero-header d-flex align-items-center">
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <i className="ri-home-8-line lh-1 pe-3 me-3 border-end" />
-                <a href="/">Home</a>
-              </li>
-              <li className="breadcrumb-item text-primary" aria-current="page">
-                Add Patient
-              </li>
-            </ol>
-          </div>
-          <div className="app-body">
-            <form onSubmit={handleSubmit}>
-              <div className="row gx-3">
-                <div className="col-sm-6 mb-3">
-                  <label>First Name</label>
-                  <input
-                    type="text"
-                    name="first_name"
-                    value={formData.first_name}
-                    onChange={handleChange}
-                    className="form-control"
-                    required
-                  />
-                </div>
-                <div className="col-sm-6 mb-3">
-                  <label>Last Name</label>
-                  <input
-                    type="text"
-                    name="last_name"
-                    value={formData.last_name}
-                    onChange={handleChange}
-                    className="form-control"
-                    required
-                  />
-                </div>
-                <div className="col-sm-6 mb-3">
-                  <label>Gender</label>
-                  <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    className="form-select"
-                    required
+        <div className="app-body">
+          {/* <div className="row gx-3"> */}
+          <div className="card ">
+            <div className="app-container">
+              <div className="app-hero-header d-flex align-items-center">
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <i className="ri-home-8-line lh-1 pe-3 me-3 border-end" />
+                    <a href="/">Home</a>
+                  </li>
+                  <li
+                    className="breadcrumb-item text-primary"
+                    aria-current="page"
                   >
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                <div className="col-sm-6 mb-3">
-                  <label>Age</label>
-                  <input
-                    type="number"
-                    name="age"
-                    value={formData.age}
-                    onChange={handleChange}
-                    className="form-control"
-                    min={0}
-                    max={150}
-                    required
-                  />
-                </div>
-                <div className="col-sm-6 mb-3">
-                  <label>Blood Group</label>
-                  <select
-                    name="blood_group"
-                    value={formData.blood_group}
-                    onChange={handleChange}
-                    className="form-select"
-                    required
-                  >
-                    <option value="">Select Blood Group</option>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                  </select>
-                </div>
-                <div className="col-sm-6 mb-3">
-                  <label>Treatment</label>
-                  <input
-                    type="text"
-                    name="treatment"
-                    value={formData.treatment}
-                    onChange={handleChange}
-                    className="form-control"
-                    required
-                  />
-                </div>
-                <div className="col-sm-6 mb-3">
-                  <label>Mobile</label>
-                  <input
-                    type="text"
-                    name="mobile"
-                    value={formData.mobile}
-                    onChange={handleChange}
-                    className="form-control"
-                    required
-                  />
-                </div>
-                <div className="col-sm-6 mb-3">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="form-control"
-                    required
-                  />
-                </div>
-                <div className="col-sm-12">
-                  <label>Address</label>
-                  <textarea
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="form-control"
-                    required
-                  ></textarea>
-                </div>
+                    Add Patient
+                  </li>
+                </ol>
               </div>
-              {error && <p className="text-danger">{error}</p>}
-              {success && <p className="text-success">{success}</p>}
-              <button type="submit" className="btn btn-primary mt-3">
-                Add Patient
-              </button>
-            </form>
+              <div className="app-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="row gx-3">
+                    <div className="col-sm-6 mb-3">
+                      <label>First Name</label>
+                      <input
+                        type="text"
+                        name="first_name"
+                        value={formData.first_name}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="col-sm-6 mb-3">
+                      <label>Last Name</label>
+                      <input
+                        type="text"
+                        name="last_name"
+                        value={formData.last_name}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="col-sm-6 mb-3">
+                      <label>Gender</label>
+                      <select
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleChange}
+                        className="form-select"
+                        required
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div className="col-sm-6 mb-3">
+                      <label>Age</label>
+                      <input
+                        type="number"
+                        name="age"
+                        value={formData.age}
+                        onChange={handleChange}
+                        className="form-control"
+                        min={0}
+                        max={150}
+                        required
+                      />
+                    </div>
+                    <div className="col-sm-6 mb-3">
+                      <label>Blood Group</label>
+                      <select
+                        name="blood_group"
+                        value={formData.blood_group}
+                        onChange={handleChange}
+                        className="form-select"
+                        required
+                      >
+                        <option value="">Select Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                      </select>
+                    </div>
+                    <div className="col-sm-6 mb-3">
+                      <label>Treatment</label>
+                      <input
+                        type="text"
+                        name="treatment"
+                        value={formData.treatment}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="col-sm-6 mb-3">
+                      <label>Mobile</label>
+                      <input
+                        type="text"
+                        name="mobile"
+                        value={formData.mobile}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="col-sm-6 mb-3">
+                      <label>Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      />
+                    </div>
+                    <div className="col-sm-12">
+                      <label>Address</label>
+                      <textarea
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                  {/* {error && <p className="text-danger">{error}</p>}
+                  {success && <p className="text-success">{success}</p>} */}
+                  <button type="submit" className="btn btn-primary mt-3">
+                    Add Patient
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
+          {/* </div> */}
         </div>
       </div>
     </div>
@@ -190,7 +227,6 @@ const AddPatient = () => {
 };
 
 export default AddPatient;
-
 
 // import Sidebar from "../../../components/Sidebar";
 // import Topbar from "../../../components/Topbar";

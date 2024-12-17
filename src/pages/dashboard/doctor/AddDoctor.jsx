@@ -12,25 +12,23 @@ const AddDoctor = () => {
     gender: "",
     email: "",
     mobile: "",
+    about: "",
+    password: "",
+    username: "",
     photo: "",
     specialization: "",
     experience: "",
     qualifications: "",
     license: "",
-    sun1: "",
-    sun2: "",
-    mon1: "",
-    mon2: "",
-    tue1: "",
-    tue2: "",
-    wed1: "",
-    wed2: "",
-    thu1: "",
-    thu2: "",
-    fri1: "",
-    fri2: "",
-    sat1: "",
-    sat2: "",
+    schedule: {
+      sun: { start: "", end: "" },
+      mon: { start: "", end: "" },
+      tue: { start: "", end: "" },
+      wed: { start: "", end: "" },
+      thu: { start: "", end: "" },
+      fri: { start: "", end: "" },
+      sat: { start: "", end: "" },
+    },
   });
 
   const fetchDepartment = async () => {
@@ -79,11 +77,112 @@ const AddDoctor = () => {
       case "license":
         setDoctor({ ...doctor, license: value });
         break;
+      case "password":
+        setDoctor({ ...doctor, password: value });
+        break;
+      case "username":
+        setDoctor({ ...doctor, username: value });
+        break;
+      case "about":
+        setDoctor({ ...doctor, about: value });
+        break;
       case "sun1":
-        setDoctor({ ...doctor, sun1: value });
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { sun: { start: value } },
+        });
         break;
       case "sun2":
-        setDoctor({ ...doctor, sun1: value });
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { sun: { end: value } },
+        });
+        break;
+      case "mon1":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { mon: { start: value } },
+        });
+        break;
+      case "mon2":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { mon: { end: value } },
+        });
+        break;
+      case "tue1":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { tue: { start: value } },
+        });
+        break;
+      case "tue2":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { tue: { end: value } },
+        });
+        break;
+      case "wed1":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { wed: { start: value } },
+        });
+        break;
+      case "wed2":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { wed: { end: value } },
+        });
+        break;
+      case "thu1":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { thu: { start: value } },
+        });
+        break;
+      case "thu2":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { thu: { end: value } },
+        });
+        break;
+      case "fri1":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { fri: { start: value } },
+        });
+        break;
+      case "fri2":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { fri: { end: value } },
+        });
+        break;
+      case "sat1":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { sat: { start: value } },
+        });
+        break;
+      case "sat2":
+        setDoctor({
+          ...doctor,
+          ...doctor.schedule,
+          schedule: { fri: { end: value } },
+        });
         break;
 
       default:

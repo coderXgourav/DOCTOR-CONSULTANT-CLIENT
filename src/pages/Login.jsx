@@ -3,13 +3,14 @@ import { login } from "../API/commonAPI";
 import { Spin } from "antd";
 
 import { notification } from "antd";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();
   const [loading, setLoading] = useState(false);
   const [btn, setBtn] = useState("Login");
-
+  const navigate = useNavigate();
   const openNotification = (status, title, desc) => {
     if (status) {
       api.success({
@@ -41,7 +42,7 @@ const Login = () => {
       if (status) {
         localStorage.setItem("token", token);
         setTimeout(() => {
-          location.href = "/dashboard";
+          navigate("/dashboard");
         }, 1500);
       }
       openNotification(status, message, desc);

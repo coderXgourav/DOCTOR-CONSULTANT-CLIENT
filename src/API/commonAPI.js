@@ -15,11 +15,11 @@ const login = async (url, method, data) => {
         },
       }
     );
-    const { status, message, desc, token } = result?.data;
+    const { status, message, desc, token } = result.data;
     return { status, message, desc, token };
   } catch (error) {
     if (error?.response?.data?.status === false) {
-      const { status, message, desc } = error?.response?.data;
+      const { status, message, desc } = error.response.data;
       return { status, message, desc };
     } else {
       return {
@@ -43,13 +43,13 @@ const postAPI = async (url, data) => {
         },
       }
     );
-    const { status, message, desc } = result?.data;
+    const { status, message, desc } = result.data;
     return { status, message, desc };
   } catch (error) {
     console.log(error);
     console.log(error.message);
     if (error?.response?.data?.status === false) {
-      const { status, message, desc } = error?.response?.data;
+      const { status, message, desc } = error.response.data;
       return { status, message, desc };
     } else {
       return {
@@ -74,7 +74,7 @@ const getAPI = async (url) => {
     console.log(error);
     console.log(error.message);
     if (error?.response?.data?.status === false) {
-      const { status, message, desc } = error?.response?.data;
+      const { status, message, desc } = error.response.data;
       return { status, message, desc };
     } else {
       return {
@@ -99,13 +99,13 @@ const deleteAPI = async (url, data) => {
       }
     );
 
-    const { status, message, desc } = result?.data;
+    const { status, message, desc } = result.data;
     return { status, message, desc };
   } catch (error) {
     console.log(error);
     console.log(error.message);
     if (error?.response?.data?.status === false) {
-      const { status, message, desc } = error?.response?.data;
+      const { status, message, desc } = error.response.data;
       return { status, message, desc };
     } else {
       return {

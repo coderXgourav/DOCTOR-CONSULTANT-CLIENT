@@ -17,7 +17,6 @@ const ViewDepartment = () => {
     setData(result);
     setLoading(false);
   };
-
   useEffect(() => {
     fetchDepartment();
   }, []);
@@ -45,7 +44,6 @@ const ViewDepartment = () => {
     if (status) {
       fetchDepartment();
     }
-
     openNotification(status, message, desc);
   };
 
