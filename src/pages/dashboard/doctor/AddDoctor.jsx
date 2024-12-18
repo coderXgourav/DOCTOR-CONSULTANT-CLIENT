@@ -2,9 +2,17 @@ import { useState, useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Topbar from "../../../components/Topbar";
 import { postAPI, getAPI } from "../../../API/commonAPI";
+import { message, notification } from "antd";
+import axios from "axios";
+
 
 const AddDoctor = () => {
   const [data, setData] = useState([]);
+const [api, contextHolder] = notification.useNotification();
+const token = localStorage.getItem("token");
+
+const apis = import.meta.env.VITE_API_URL;
+
   const [doctor, setDoctor] = useState({
     firstName: "",
     lastName: "",
@@ -41,6 +49,22 @@ const AddDoctor = () => {
     fetchDepartment();
   }, []);
 
+  const openNotification = (status, title, desc) => {
+    if (status) {
+      api.success({
+        message: title,
+        description: desc,
+      });
+    } else {
+      api.error({
+        message: title,
+        description: desc,
+      });
+    }
+  };
+  
+  
+
   const formChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
@@ -65,7 +89,7 @@ const AddDoctor = () => {
       case "image":
         setDoctor({ ...doctor, photo: value });
         break;
-      case "specialization ":
+      case "specification":
         setDoctor({ ...doctor, specialization: value });
         break;
       case "experience":
@@ -193,7 +217,12 @@ const AddDoctor = () => {
   const doctorSubmit = (event) => {
     event.preventDefault();
     postAPI("doctor/add-doctor", doctor);
+    message.success("Doctor Added Successfully");
   };
+
+  
+  
+  
 
   return (
     <>
@@ -503,7 +532,7 @@ const AddDoctor = () => {
                             >
                               {/* Row starts */}
                               <div className="row gx-3">
-                                <div className="col-xxl-3 col-lg-4 col-sm-6">
+                                {/* <div className="col-xxl-3 col-lg-4 col-sm-6">
                                   <div className="mb-3">
                                     <label className="form-label" htmlFor="a3">
                                       Specialization{" "}
@@ -533,7 +562,29 @@ const AddDoctor = () => {
                                       </select>
                                     </div>
                                   </div>
-                                </div>
+                                </div> */}
+
+                                {/* Specification Dropdown */}
+      <div className="col-xxl-3 col-lg-4 col-sm-6">
+        <div className="mb-3">
+          <label className="form-label" htmlFor="specification">
+            Select Specification
+          </label>
+          <select
+            className="form-select"
+            id="specification"
+            name="specification"
+            onChange={formChange}
+          >
+            <option value="">Select Department</option>
+            {data.map((department) => (
+              <option key={department._id} value={department.department}>
+                {department.department}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
                                 <div className="col-xxl-3 col-lg-4 col-sm-6">
                                   <div className="mb-3">
                                     <label className="form-label" htmlFor="a3">
@@ -976,12 +1027,15 @@ const AddDoctor = () => {
                         {/* Custom tabs ends */}
                         {/* Card acrions starts */}
                         <div className="d-flex gap-2 justify-content-end mt-4">
+
                           <a href="#" className="btn btn-outline-secondary">
                             Cancel
                           </a>
+
                           <button type="submit" className="btn btn-primary">
                             Create Doctor Profile
                           </button>
+
                         </div>
                       </form>
 

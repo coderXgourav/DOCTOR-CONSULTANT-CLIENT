@@ -1,6 +1,7 @@
 import axios from "axios";
 const api = import.meta.env.VITE_API_URL;
 const token = localStorage.getItem("token");
+import { message, notification } from "antd";
 
 // POST , PUT  APIS
 
@@ -50,8 +51,10 @@ const postAPI = async (url, data) => {
     console.log(error.message);
     if (error?.response?.data?.status === false) {
       const { status, message, desc } = error.response.data;
+      message.success("Failed to create doctor");
       return { status, message, desc };
     } else {
+      message.success("Failed to create doctor");
       return {
         status: false,
         message: "Technical Issue",
@@ -60,6 +63,50 @@ const postAPI = async (url, data) => {
     }
   }
 };
+
+// const postAPI = async (url, data, openNotification) => {
+//   try {
+//     const result = await axios.post(
+//       `${api}/${url}`,
+//       { ...data },
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${token}`,
+//         },
+//       }
+//     );
+
+//     const { status, message, desc } = result.data;
+
+//     // Call notification function for success
+//     if (openNotification) {
+//       openNotification(status, message, desc);
+//     }
+
+//     return { status, message, desc };
+//   } catch (error) {
+//     console.error("API error:", error);
+
+//     let notificationData = {
+//       status: false,
+//       message: "Technical Issue",
+//       desc: "Technical issue! Please try again later",
+//     };
+
+//     if (error?.response?.data?.status === false) {
+//       notificationData = error.response.data;
+//     }
+
+//     // Call notification function for errors
+//     if (openNotification) {
+//       openNotification(notificationData.status, notificationData.message, notificationData.desc);
+//     }
+
+//     return notificationData;
+//   }
+// };
+
 
 const getAPI = async (url) => {
   try {
