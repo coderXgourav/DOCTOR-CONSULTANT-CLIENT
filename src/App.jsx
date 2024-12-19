@@ -9,7 +9,7 @@ import AddPatient from "./pages/dashboard/patient/AddPatient";
 import AddDepartment from "./pages/dashboard/department/AddDepartment";
 import ViewDepartment from "./pages/dashboard/department/ViewDepartment";
 import Soon from "./pages/Soon";
-// import GlobalHelmet from "./components/GlobalHelmet";
+// import GlobalHelmet from "./components/GlossbalHelmet";
 
 function App() {
   return (
