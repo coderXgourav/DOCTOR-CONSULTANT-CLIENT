@@ -16,7 +16,7 @@ const Topbar = () => {
         }
       });
     }
-  });
+  }, [0]);
 
   const logoutHandler = async () => {
     console.log("test logout");

@@ -2,16 +2,13 @@ import { useState, useEffect } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Topbar from "../../../components/Topbar";
 import { postAPI, getAPI } from "../../../API/commonAPI";
-import { message, notification } from "antd";
-import axios from "axios";
-
+import { notification } from "antd";
 
 const AddDoctor = () => {
   const [data, setData] = useState([]);
-const [api, contextHolder] = notification.useNotification();
-const token = localStorage.getItem("token");
+  const [api, contextHolder] = notification.useNotification();
 
-const apis = import.meta.env.VITE_API_URL;
+  // const apis = import.meta.env.VITE_API_URL;
 
   const [doctor, setDoctor] = useState({
     firstName: "",
@@ -42,7 +39,6 @@ const apis = import.meta.env.VITE_API_URL;
   const fetchDepartment = async () => {
     const result = await getAPI("department/all-department");
     setData(result);
-    // setLoading(false);
   };
 
   useEffect(() => {
@@ -50,7 +46,8 @@ const apis = import.meta.env.VITE_API_URL;
   }, []);
 
   const openNotification = (status, title, desc) => {
-    if (status) {
+    console.log(title);
+    if (status == true) {
       api.success({
         message: title,
         description: desc,
@@ -62,8 +59,6 @@ const apis = import.meta.env.VITE_API_URL;
       });
     }
   };
-  
-  
 
   const formChange = (event) => {
     const { name, value } = event.target;
@@ -214,18 +209,17 @@ const apis = import.meta.env.VITE_API_URL;
     }
   };
 
-  const doctorSubmit = (event) => {
+  const doctorSubmit = async (event) => {
     event.preventDefault();
-    postAPI("doctor/add-doctor", doctor);
-    message.success("Doctor Added Successfully");
-  };
+    const result = await postAPI("doctor/add-doctor", doctor);
+    const { status, message, desc } = result;
 
-  
-  
-  
+    openNotification(status, message, desc);
+  };
 
   return (
     <>
+      {contextHolder}
       <div className="page-wrapper">
         {/* App header starts */}
         <Topbar />
@@ -565,26 +559,34 @@ const apis = import.meta.env.VITE_API_URL;
                                 </div> */}
 
                                 {/* Specification Dropdown */}
-      <div className="col-xxl-3 col-lg-4 col-sm-6">
-        <div className="mb-3">
-          <label className="form-label" htmlFor="specification">
-            Select Specification
-          </label>
-          <select
-            className="form-select"
-            id="specification"
-            name="specification"
-            onChange={formChange}
-          >
-            <option value="">Select Department</option>
-            {data.map((department) => (
-              <option key={department._id} value={department.department}>
-                {department.department}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+                                <div className="col-xxl-3 col-lg-4 col-sm-6">
+                                  <div className="mb-3">
+                                    <label
+                                      className="form-label"
+                                      htmlFor="specification"
+                                    >
+                                      Select Specification
+                                    </label>
+                                    <select
+                                      className="form-select"
+                                      id="specification"
+                                      name="specification"
+                                      onChange={formChange}
+                                    >
+                                      <option value="">
+                                        Select Department
+                                      </option>
+                                      {data.map((department) => (
+                                        <option
+                                          key={department._id}
+                                          value={department.department}
+                                        >
+                                          {department.department}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </div>
+                                </div>
                                 <div className="col-xxl-3 col-lg-4 col-sm-6">
                                   <div className="mb-3">
                                     <label className="form-label" htmlFor="a3">
@@ -1027,7 +1029,6 @@ const apis = import.meta.env.VITE_API_URL;
                         {/* Custom tabs ends */}
                         {/* Card acrions starts */}
                         <div className="d-flex gap-2 justify-content-end mt-4">
-
                           <a href="#" className="btn btn-outline-secondary">
                             Cancel
                           </a>
@@ -1035,7 +1036,6 @@ const apis = import.meta.env.VITE_API_URL;
                           <button type="submit" className="btn btn-primary">
                             Create Doctor Profile
                           </button>
-
                         </div>
                       </form>
 

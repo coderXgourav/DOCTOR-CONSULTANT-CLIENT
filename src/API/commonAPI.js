@@ -1,7 +1,6 @@
 import axios from "axios";
 const api = import.meta.env.VITE_API_URL;
 const token = localStorage.getItem("token");
-import { message, notification } from "antd";
 
 // POST , PUT  APIS
 
@@ -47,14 +46,10 @@ const postAPI = async (url, data) => {
     const { status, message, desc } = result.data;
     return { status, message, desc };
   } catch (error) {
-    console.log(error);
-    console.log(error.message);
-    if (error?.response?.data?.status === false) {
+    if (error?.response?.data?.status == false) {
       const { status, message, desc } = error.response.data;
-      message.success("Failed to create doctor");
       return { status, message, desc };
     } else {
-      message.success("Failed to create doctor");
       return {
         status: false,
         message: "Technical Issue",
@@ -106,7 +101,6 @@ const postAPI = async (url, data) => {
 //     return notificationData;
 //   }
 // };
-
 
 const getAPI = async (url) => {
   try {
