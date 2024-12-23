@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login } from "../API/commonAPI";
 import { Spin } from "antd";
 
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 const Login = () => {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decode = jwtDecode(token);
+      if (decode) {
+        location.href = "/dashboard";
+      }
+    }
+  }, [0]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [api, contextHolder] = notification.useNotification();

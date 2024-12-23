@@ -1,6 +1,38 @@
+import { notification } from "antd";
+import { postAPI } from "../API/commonAPI";
+
 const Sidebar = () => {
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (status, title, desc) => {
+    if (status) {
+      api.success({
+        message: title,
+        description: desc,
+      });
+    } else {
+      api.error({
+        message: title,
+        description: desc,
+      });
+    }
+  };
+  const logoutHandler = async () => {
+    const result = await postAPI("logout", { name: "logout" });
+    localStorage.removeItem("token");
+    const { status, message, desc } = result;
+    if (status) {
+      openNotification(status, message, desc);
+      setTimeout(() => {
+        location.href = "/";
+      }, 1000);
+    } else {
+      openNotification(status, message, desc);
+    }
+  };
   return (
     <nav id="sidebar" className="sidebar-wrapper">
+      {contextHolder}
       {/* Sidebar profile starts */}
       <div className="sidebar-profile">
         <img
@@ -106,8 +138,8 @@ const Sidebar = () => {
               <span className="menu-text"> Settings</span>
             </a>
           </li>
-          <li>
-            <a href="settings.html">
+          <li onClick={logoutHandler}>
+            <a href="javascript:void(0)">
               <i className="ri-settings-5-line" />
               <span className="menu-text"> Logout</span>
             </a>

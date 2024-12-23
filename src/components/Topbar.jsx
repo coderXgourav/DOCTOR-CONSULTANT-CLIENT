@@ -1,26 +1,51 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { postAPI } from "../API/commonAPI";
+import { notification } from "antd";
+import { useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const Topbar = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       location.href = "/";
     } else {
-      const res = postAPI("check-token", {});
-      res.then((response) => {
-        if (response?.status !== true) {
-          location.href = "/";
-        }
-      });
+      const decode = jwtDecode(token);
+      if (!decode) {
+        location.href = "/";
+      }
     }
   }, [0]);
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (status, title, desc) => {
+    if (status) {
+      api.success({
+        message: title,
+        description: desc,
+      });
+    } else {
+      api.error({
+        message: title,
+        description: desc,
+      });
+    }
+  };
 
   const logoutHandler = async () => {
-    console.log("test logout");
-    await postAPI("logout", { name: "logout" });
+    const result = await postAPI("logout", { name: "logout" });
+    localStorage.removeItem("token");
+
+    const { status, message, desc } = result;
+    if (status) {
+      openNotification(status, message, desc);
+      setTimeout(() => {
+        location.href = "/";
+      }, 1000);
+    } else {
+      openNotification(status, message, desc);
+    }
   };
   return (
     <>
@@ -35,6 +60,7 @@ const Topbar = () => {
       </Helmet>
 
       <div className="app-header d-flex align-items-center">
+        {contextHolder}
         {/* Toggle buttons starts */}
         <div className="d-flex">
           <button className="toggle-sidebar">
