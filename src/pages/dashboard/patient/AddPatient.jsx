@@ -46,7 +46,13 @@ const AddPatient = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/patient/add-patient`,
-        formData
+        { ...formData },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       const { status, message, desc } = response.data;
       openNotification(status, message, desc);

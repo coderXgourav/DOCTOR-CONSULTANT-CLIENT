@@ -1,50 +1,84 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../../components/Sidebar";
 import Topbar from "../../../components/Topbar";
 import axios from "axios";
+import { Spin, message } from "antd"; // Import Spin from Ant Design
 
 const ViewPatient = () => {
+  const [loading, setLoading] = useState(false);
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
 
-  const token=localStorage.getItem('token')
-   
+  const token = localStorage.getItem("token");
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const success = (message) => {
+    messageApi.open({
+      type: "success",
+      content: message,
+    });
+  };
+
+  const error = (message) => {
+    messageApi.open({
+      type: "error",
+      content: message,
+    });
+  };
 
   const fetchPatients = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/patient/get-patient`,{
-        headers :{
-          'Authorization': `Bearer ${token}`
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/patient/get-patient`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      }
-    
-    );
+      );
       setPatients(response.data.data);
-    } catch (error) {
-      console.error("Error fetching patients:", error);
+      setLoading(false);
+    } catch (err) {
+      error(err.message);
+      setLoading(false);
     }
   };
 
   const handleDeletePatient = async () => {
+    setLoading(true);
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/patient/delete-patient/${selectedPatientId}`,{
-        headers :{
-          'Authorization': `Bearer ${token}`
+      const result = await axios.delete(
+        `${
+          import.meta.env.VITE_API_URL
+        }/patient/delete-patient/${selectedPatientId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
-      setPatients((prev) => prev.filter((patient) => patient._id !== selectedPatientId));
+      );
+      const { message } = result.data;
+      success(message);
+      setPatients((prev) =>
+        prev.filter((patient) => patient._id !== selectedPatientId)
+      );
       setSelectedPatientId(null);
-    } catch (error) {
-      console.error("Error deleting patient:", error);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      error(err.message);
     }
   };
 
   useEffect(() => {
     fetchPatients();
-  }, []);
+  }, [0]);
 
   return (
     <>
+      {contextHolder}
       <div className="page-wrapper">
         <Topbar />
         <div className="main-container">
@@ -56,7 +90,10 @@ const ViewPatient = () => {
                   <i className="ri-home-8-line lh-1 pe-3 me-3 border-end" />
                   <a href="/">Home</a>
                 </li>
-                <li className="breadcrumb-item text-primary" aria-current="page">
+                <li
+                  className="breadcrumb-item text-primary"
+                  aria-current="page"
+                >
                   Patients List
                 </li>
               </ol>
@@ -73,91 +110,123 @@ const ViewPatient = () => {
                   <div className="card">
                     <div className="card-header d-flex align-items-center justify-content-between">
                       <h5 className="card-title">Patients List</h5>
-                      <a href="/add-patient" className="btn btn-primary ms-auto">
+                      <a
+                        href="/add-patient"
+                        className="btn btn-primary ms-auto"
+                      >
                         Add Patient
                       </a>
                     </div>
                     <div className="card-body">
                       <div className="table-responsive">
-                        <table className="table truncate m-0 align-middle">
-                          <thead>
-                            <tr>
-                              <th>No.</th>
-                              <th>Patient Name</th>
-                              <th>Gender</th>
-                              <th>Age</th>
-                              <th>Blood Group</th>
-                              <th>Treatment</th>
-                              <th>Mobile</th>
-                              <th>Email</th>
-                              <th>Address</th>
-                              <th>Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {patients?.map((patient, index) => (
-                              <tr key={patient._id}>
-                                <td>{index + 1}</td>
-                                <td>
-                                  <img
-                                    src="/assets/images/patient.png"
-                                    className="img-shadow img-2x rounded-5 me-1"
-                                    alt="Patient"
-                                  />
-                                  {patient.first_name} {patient.last_name}
-                                </td>
-                                <td>
-                                  <span className={`badge bg-info-subtle text-info`}>
-                                    {patient.gender}
-                                  </span>
-                                </td>
-                                <td>{patient.age}</td>
-                                <td>{patient.blood_group}</td>
-                                <td>{patient.treatment}</td>
-                                <td>{patient.mobile}</td>
-                                <td>{patient.email}</td>
-                                <td>{patient.address}</td>
-                                <td>
-                                  <div className="d-inline-flex gap-1">
-                                    <button
-                                      className="btn btn-outline-danger btn-sm"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#delRow"
-                                      onClick={() => setSelectedPatientId(patient._id)}
-                                    >
-                                      <i className="ri-delete-bin-line" />
-                                    </button>
-                                    <a
-                                      href={`/edit-patient/${patient._id}`}
-                                      className="btn btn-outline-success btn-sm"
-                                    >
-                                      <i className="ri-edit-box-line" />
-                                    </a>
-                                    <a
-                                      href={`/patient-dashboard/${patient._id}`}
-                                      className="btn btn-outline-info btn-sm"
-                                    >
-                                      <i className="ri-eye-line" />
-                                    </a>
-                                  </div>
-                                </td>
+                        <Spin spinning={loading} size="large">
+                          <table className="table truncate m-0 align-middle">
+                            <thead>
+                              <tr>
+                                <th>No.</th>
+                                <th>Patient Name</th>
+                                <th>Gender</th>
+                                <th>Age</th>
+                                <th>Blood Group</th>
+                                <th>Treatment</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Actions</th>
                               </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                            </thead>
+                            <tbody>
+                              {patients.length > 0 ? (
+                                patients?.map((patient, index) => (
+                                  <tr key={patient._id}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                      <img
+                                        src="/assets/images/patient.png"
+                                        className="img-shadow img-2x rounded-5 me-1"
+                                        alt="Patient"
+                                      />
+                                      {patient.first_name} {patient.last_name}
+                                    </td>
+                                    <td>
+                                      <span
+                                        className={`badge bg-info-subtle text-info`}
+                                      >
+                                        {patient.gender}
+                                      </span>
+                                    </td>
+                                    <td>{patient.age}</td>
+                                    <td>{patient.blood_group}</td>
+                                    <td>{patient.treatment}</td>
+                                    <td>{patient.mobile}</td>
+                                    <td>{patient.email}</td>
+                                    <td>{patient.address}</td>
+                                    <td>
+                                      <div className="d-inline-flex gap-1">
+                                        <button
+                                          className="btn btn-outline-danger btn-sm"
+                                          data-bs-toggle="modal"
+                                          data-bs-target="#delRow"
+                                          onClick={() =>
+                                            setSelectedPatientId(patient._id)
+                                          }
+                                        >
+                                          <i className="ri-delete-bin-line" />
+                                        </button>
+                                        <a
+                                          href={`/edit-patient/${patient._id}`}
+                                          className="btn btn-outline-success btn-sm"
+                                        >
+                                          <i className="ri-edit-box-line" />
+                                        </a>
+                                        <a
+                                          href={`/patient-dashboard/${patient._id}`}
+                                          className="btn btn-outline-info btn-sm"
+                                        >
+                                          <i className="ri-eye-line" />
+                                        </a>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))
+                              ) : (
+                                <tr>
+                                  <td
+                                    colSpan={10}
+                                    style={{
+                                      color: "red",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    {loading
+                                      ? "Loading..."
+                                      : "Patient Not Found.."}
+                                  </td>
+                                </tr>
+                              )}
+                            </tbody>
+                          </table>
+                        </Spin>
                       </div>
                       <div className="modal fade" id="delRow" tabIndex={-1}>
                         <div className="modal-dialog modal-sm">
                           <div className="modal-content">
                             <div className="modal-header">
                               <h5 className="modal-title">Confirm</h5>
-                              <button type="button" className="btn-close" data-bs-dismiss="modal" />
+                              <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                              />
                             </div>
                             <div className="modal-body">
                               Are you sure you want to delete the patient?
                             </div>
                             <div className="modal-footer">
-                              <button className="btn btn-outline-secondary" data-bs-dismiss="modal">
+                              <button
+                                className="btn btn-outline-secondary"
+                                data-bs-dismiss="modal"
+                              >
                                 No
                               </button>
                               <button
@@ -184,8 +253,6 @@ const ViewPatient = () => {
 };
 
 export default ViewPatient;
-
-
 
 // import Sidebar from "../../../components/Sidebar";
 // import Topbar from "../../../components/Topbar";

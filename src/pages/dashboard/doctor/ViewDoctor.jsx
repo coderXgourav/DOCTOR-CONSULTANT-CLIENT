@@ -6,11 +6,11 @@ import { message, Spin } from "antd"; // Import Spin from Ant Design
 
 const ViewDoctor = () => {
   const [doctors, setDoctors] = useState([]);
-  const [pagination, setPagination] = useState({
-    totalDoctors: 0,
-    currentPage: 1,
-    totalPages: 1,
-  });
+  // const [pagination, setPagination] = useState({
+  //   totalDoctors: 0,
+  //   currentPage: 1,
+  //   totalPages: 1,
+  // });
 
   const [selectedDoctorId, setSelectedDoctorId] = useState(null); // Store selected doctor ID
   const [loading, setLoading] = useState(false); // State for loading spinner
@@ -36,7 +36,7 @@ const ViewDoctor = () => {
 
       if (response.data.status) {
         setDoctors(response.data.doctors);
-        setPagination(response.data.pagination);
+        // setPagination(response.data.pagination);
       } else {
         console.error("Failed to fetch doctors:", response.data.desc);
       }
@@ -52,7 +52,9 @@ const ViewDoctor = () => {
     setLoading(true); // Show loading spinner during deletion
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/doctor/delete-doctor/${selectedDoctorId}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/doctor/delete-doctor/${selectedDoctorId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -60,10 +62,9 @@ const ViewDoctor = () => {
           },
         }
       );
-      message.success("Doctor deleted successfully");
-      setTimeout(() => {
-        window.location.reload(); // Reload the page to update the doctors list
-      }, 600);
+      const { message } = response.data;
+      message.success(message);
+      fetchDoctors();
     } catch (error) {
       // Handle error in case of exception
       console.error("Error deleting doctor:", error);
@@ -94,7 +95,10 @@ const ViewDoctor = () => {
                   <i className="ri-home-8-line lh-1 pe-3 me-3 border-end" />
                   <a href="index-2.html">Home</a>
                 </li>
-                <li className="breadcrumb-item text-primary" aria-current="page">
+                <li
+                  className="breadcrumb-item text-primary"
+                  aria-current="page"
+                >
                   Doctors List
                 </li>
               </ol>
@@ -115,8 +119,11 @@ const ViewDoctor = () => {
                     <div className="card-body">
                       {/* Table starts */}
                       <div className="table-responsive">
-                        <Spin spinning={loading} tip="Loading doctors...">
-                          <table id="basicExample" className="table truncate m-0 align-middle">
+                        <Spin spinning={loading} size="large">
+                          <table
+                            id="basicExample"
+                            className="table truncate m-0 align-middle"
+                          >
                             <thead>
                               <tr>
                                 <th>No.</th>
@@ -141,7 +148,9 @@ const ViewDoctor = () => {
                                     {doctor.firstName} {doctor.lastName}
                                   </td>
                                   <td>
-                                    <span className="badge bg-info-subtle text-info">{doctor.gender}</span>
+                                    <span className="badge bg-info-subtle text-info">
+                                      {doctor.gender}
+                                    </span>
                                   </td>
                                   <td>{doctor.experience} Years</td>
                                   <td>{doctor.mobile}</td>
@@ -152,14 +161,28 @@ const ViewDoctor = () => {
                                         className="btn btn-outline-danger btn-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#delRow"
-                                        onClick={() => setSelectedDoctorId(doctor._id)} // Set selected doctor ID
+                                        onClick={() =>
+                                          setSelectedDoctorId(doctor._id)
+                                        } // Set selected doctor ID
                                       >
                                         <i className="ri-delete-bin-line" />
                                       </button>
-                                      <a href="edit-patient.html" className="btn btn-outline-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Patient Details">
+                                      <a
+                                        href="edit-patient.html"
+                                        className="btn btn-outline-success btn-sm"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Edit Patient Details"
+                                      >
                                         <i className="ri-edit-box-line" />
                                       </a>
-                                      <a href="/doctor" className="btn btn-outline-info btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View Dashboard">
+                                      <a
+                                        href="/doctor"
+                                        className="btn btn-outline-info btn-sm"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="View Dashboard"
+                                      >
                                         <i className="ri-eye-line" />
                                       </a>
                                     </div>
@@ -172,19 +195,38 @@ const ViewDoctor = () => {
                       </div>
                       {/* Table ends */}
                       {/* Modal Delete Row */}
-                      <div className="modal fade" id="delRow" tabIndex={-1} aria-labelledby="delRowLabel" aria-hidden="true">
+                      <div
+                        className="modal fade"
+                        id="delRow"
+                        tabIndex={-1}
+                        aria-labelledby="delRowLabel"
+                        aria-hidden="true"
+                      >
                         <div className="modal-dialog modal-sm">
                           <div className="modal-content">
                             <div className="modal-header">
-                              <h5 className="modal-title" id="delRowLabel">Confirm</h5>
-                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                              <h5 className="modal-title" id="delRowLabel">
+                                Confirm
+                              </h5>
+                              <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              />
                             </div>
                             <div className="modal-body">
                               Are you sure you want to delete this doctor?
                             </div>
                             <div className="modal-footer">
                               <div className="d-flex justify-content-end gap-2">
-                                <button className="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">No</button>
+                                <button
+                                  className="btn btn-outline-secondary"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  No
+                                </button>
                                 <button
                                   className="btn btn-danger"
                                   data-bs-dismiss="modal"

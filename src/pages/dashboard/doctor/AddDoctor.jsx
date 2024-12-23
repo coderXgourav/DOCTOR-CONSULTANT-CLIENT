@@ -1003,18 +1003,19 @@ const AddDoctor = () => {
                                 <div className="col-xxl-12 col-lg-12 col-sm-12">
                                   <div className="mb-3">
                                     <label className="form-label" htmlFor="u1">
-                                      About Me
+                                      Doctor Description
                                     </label>
-                                    <div className="input-group">
-                                      <span className="input-group-text">
+                                    <div className="">
+                                      {/* <span className="input-group-text">
                                         <i className="ri-account-pin-circle-line" />
-                                      </span>
-                                      <input
+                                      </span> */}
+                                      <textarea
                                         type="text"
                                         id="u1"
-                                        placeholder="Enter username"
+                                        placeholder="Write here doctor description"
                                         className="form-select"
                                         name="about"
+                                        rows={10}
                                         onChange={formChange}
                                       />
                                     </div>
