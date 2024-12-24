@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Spin, notification } from "antd";
-import { useNavigate } from "react-router-dom";
 import { postAPI } from "../../API/commonAPI";
 
 const DoctorSignUp = () => {
@@ -12,11 +11,11 @@ const DoctorSignUp = () => {
   }, []);
 
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     gender: "",
     email: "",
-    phone: "",
+    mobile: "",
     password: "",
     usernmae: "",
     confirmPassword: "",
@@ -25,7 +24,6 @@ const DoctorSignUp = () => {
   const [loading, setLoading] = useState(false);
   const [btn, setBtn] = useState("Sign Up");
   const [api, contextHolder] = notification.useNotification();
-  const navigate = useNavigate();
 
   const openNotification = (status, title, desc) => {
     if (status) {
@@ -52,22 +50,22 @@ const DoctorSignUp = () => {
     setBtn("Please wait...");
 
     const {
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       gender,
       email,
-      phone,
+      mobile,
       password,
       confirmPassword,
       username,
     } = formData;
 
     if (
-      !firstname ||
-      !lastname ||
+      !firstName ||
+      !lastName ||
       !gender ||
       !email ||
-      !phone ||
+      !mobile ||
       !password ||
       !confirmPassword ||
       !username
@@ -88,14 +86,24 @@ const DoctorSignUp = () => {
       return;
     }
 
-    const response = await postAPI("doctor/add-doctor", formData);
+    const response = await postAPI("doctor/signup", formData);
     const { status, message, desc } = response;
 
     if (status) {
+      setFormData({
+        firstName: "",
+        lastName: "",
+        gender: "",
+        email: "",
+        mobile: "",
+        password: "",
+        usernmae: "",
+        confirmPassword: "",
+      });
       openNotification(status, message, desc);
       setTimeout(() => {
-        navigate("/doctor/dashboard");
-      }, 1500);
+        window.location.href = "/doctor/login";
+      }, 1000);
     } else {
       openNotification(status, message, desc);
     }
@@ -120,32 +128,32 @@ const DoctorSignUp = () => {
             <div className="auth-box" style={{ width: "800px" }}>
               <h4 className="mb-4">Doctor Sign Up</h4>
               <div className="mb-3">
-                <label className="form-label" htmlFor="firstname">
+                <label className="form-label" htmlFor="firstName">
                   First Name <span className="text-danger">*</span>
                 </label>
 
                 <input
                   type="text"
-                  id="firstname"
+                  id="firstName"
                   className="form-control"
                   placeholder="Enter your first name"
-                  name="firstname"
-                  value={formData.firstname}
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleChange}
                   autoComplete="off"
                 />
               </div>
               <div className="mb-3">
-                <label className="form-label" htmlFor="lastname">
+                <label className="form-label" htmlFor="lastName">
                   Last Name <span className="text-danger">*</span>
                 </label>
                 <input
                   type="text"
-                  id="lastname"
+                  id="lastName"
                   className="form-control"
                   placeholder="Enter your last name"
-                  name="lastname"
-                  value={formData.lastname}
+                  name="lastName"
+                  value={formData.lastName}
                   onChange={handleChange}
                   autoComplete="off"
                 />
@@ -188,27 +196,27 @@ const DoctorSignUp = () => {
                   Username <span className="text-danger">*</span>
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   id="email"
                   className="form-control"
                   placeholder="Username"
                   name="username"
-                  value={formData.email}
+                  value={formData.username}
                   onChange={handleChange}
                   autoComplete="off"
                 />
               </div>
               <div className="mb-3">
-                <label className="form-label" htmlFor="phone">
+                <label className="form-label" htmlFor="mobile">
                   Phone Number <span className="text-danger">*</span>
                 </label>
                 <input
                   type="text"
-                  id="phone"
+                  id="mobile"
                   className="form-control"
-                  placeholder="Enter your phone number"
-                  name="phone"
-                  value={formData.phone}
+                  placeholder="Enter your mobile number"
+                  name="mobile"
+                  value={formData.mobile}
                   onChange={handleChange}
                   autoComplete="off"
                 />

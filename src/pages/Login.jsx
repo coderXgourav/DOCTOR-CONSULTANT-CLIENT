@@ -44,7 +44,7 @@ const Login = () => {
       setLoading(false);
       setBtn("Login");
     } else {
-      const response = await login("login", "POST", {
+      const response = await login("login", {
         email_username: username,
         password,
       });
@@ -70,7 +70,7 @@ const Login = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-
+          height: "100vh",
           background: "#3795ff",
         }}
       >

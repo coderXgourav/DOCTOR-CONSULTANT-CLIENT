@@ -15,6 +15,7 @@ const AddDoctor = () => {
     lastName: "",
     age: "",
     gender: "",
+    status: "",
     email: "",
     mobile: "",
     about: "",
@@ -104,6 +105,9 @@ const AddDoctor = () => {
         break;
       case "about":
         setDoctor({ ...doctor, about: value });
+        break;
+      case "status":
+        setDoctor({ ...doctor, status: value });
         break;
       case "sun1":
         setDoctor({
@@ -211,7 +215,7 @@ const AddDoctor = () => {
 
   const doctorSubmit = async (event) => {
     event.preventDefault();
-    const result = await postAPI("doctor/add-doctor", doctor);
+    const result = await postAPI("admin/add-doctor", doctor);
     const { status, message, desc } = result;
 
     openNotification(status, message, desc);
@@ -987,6 +991,29 @@ const AddDoctor = () => {
                                       >
                                         <i className="ri-eye-off-line" />
                                       </button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-xxl-3 col-lg-4 col-sm-6">
+                                  <div className="mb-3">
+                                    <label className="form-label" htmlFor="u3">
+                                      Status
+                                    </label>
+                                    <div className="input-group">
+                                      <span className="input-group-text">
+                                        <i className="ri-lock-password-line" />
+                                      </span>
+                                      <select
+                                        className="form-select"
+                                        name="status"
+                                        onChange={formChange}
+                                      >
+                                        <option value={0}>Select Status</option>
+                                        <option value={"active"}>Active</option>
+                                        <option value={"inactive"}>
+                                          Inactive
+                                        </option>
+                                      </select>
                                     </div>
                                   </div>
                                 </div>

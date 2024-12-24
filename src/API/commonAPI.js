@@ -4,7 +4,7 @@ const token = localStorage.getItem("token");
 
 // POST , PUT  APIS
 
-const login = async (url, method, data) => {
+const login = async (url, data) => {
   try {
     const result = await axios.post(
       `${api}/${url}`,

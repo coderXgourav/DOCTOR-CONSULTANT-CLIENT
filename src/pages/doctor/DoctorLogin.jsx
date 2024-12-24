@@ -8,11 +8,11 @@ import { jwtDecode } from "jwt-decode";
 import { login } from "../../API/commonAPI";
 const DoctorLogin = () => {
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("doctorToken");
     if (token) {
       const decode = jwtDecode(token);
       if (decode) {
-        location.href = "/dashboard";
+        location.href = "/doctor/dashboard";
       }
     }
   }, [0]);
@@ -45,15 +45,15 @@ const DoctorLogin = () => {
       setLoading(false);
       setBtn("Login");
     } else {
-      const response = await login("login", "POST", {
+      const response = await login("doctor/login", {
         email_username: username,
         password,
       });
       const { status, message, desc, token } = response;
       if (status) {
-        localStorage.setItem("token", token);
+        localStorage.setItem("doctorToken", token);
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/doctor/dashboard");
         }, 1500);
       }
       openNotification(status, message, desc);
@@ -71,6 +71,7 @@ const DoctorLogin = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          height: "100vh",
 
           background: "rgb(53 55 57)",
         }}

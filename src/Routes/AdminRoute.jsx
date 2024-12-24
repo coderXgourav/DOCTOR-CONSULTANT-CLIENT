@@ -25,6 +25,7 @@ const AdminRoute = () => {
           <Route path="/add-patient" element={<AddPatient />}></Route>
           <Route path="/add-department" element={<AddDepartment />}></Route>
           <Route path="/view-department" element={<ViewDepartment />}></Route>
+
           {/* <Route path="*" element={<Soon />}></Route> */}
         </Routes>
       </Router>

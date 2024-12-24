@@ -25,7 +25,7 @@ const ViewDoctor = () => {
     setLoading(true); // Show loading spinner
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/doctor/get-doctor`,
+        `${import.meta.env.VITE_API_URL}/admin/get-doctor`,
         {
           headers: {
             "Content-Type": "application/json",
