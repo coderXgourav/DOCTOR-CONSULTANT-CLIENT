@@ -1,37 +1,57 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { postAPI } from "../API/commonAPI";
+import { notification } from "antd";
+import { useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const Topbar = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       location.href = "/";
     } else {
-      const res = postAPI("check-token", {});
-      res.then((response) => {
-        if (response?.status !== true) {
-          location.href = "/";
-        }
+      const decode = jwtDecode(token);
+      if (!decode) {
+        location.href = "/";
+      }
+    }
+  }, [0]);
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (status, title, desc) => {
+    if (status) {
+      api.success({
+        message: title,
+        description: desc,
+      });
+    } else {
+      api.error({
+        message: title,
+        description: desc,
       });
     }
-  });
+  };
+
+  const logoutHandler = async () => {
+    const result = await postAPI("logout", { name: "logout" });
+    localStorage.removeItem("token");
+
+    const { status, message, desc } = result;
+    if (status) {
+      openNotification(status, message, desc);
+      setTimeout(() => {
+        location.href = "/";
+      }, 1000);
+    } else {
+      openNotification(status, message, desc);
+    }
+  };
   return (
     <>
       <Helmet>
         <title>Doctor Consultant</title>
         <script src="assets/js/jquery.min.js"></script>
-
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/js/moment.min.js"></script>
-
-        <script src="assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
-        <script src="assets/vendor/overlay-scroll/custom-scrollbar.js"></script>
-
-        <script src="assets/vendor/apex/apexcharts.min.js"></script>
-        <script src="assets/vendor/apex/custom/home/patients.js"></script>
-        <script src="assets/vendor/apex/custom/home/treatment.js"></script>
         <script src="assets/vendor/apex/custom/home/available-beds.js"></script>
         <script src="assets/vendor/apex/custom/home/earnings.js"></script>
         <script src="assets/vendor/apex/custom/home/gender-age.js"></script>
@@ -40,6 +60,7 @@ const Topbar = () => {
       </Helmet>
 
       <div className="app-header d-flex align-items-center">
+        {contextHolder}
         {/* Toggle buttons starts */}
         <div className="d-flex">
           <button className="toggle-sidebar">
@@ -53,11 +74,11 @@ const Topbar = () => {
         {/* App brand starts */}
         <div className="app-brand ms-3 bg-light">
           <a href="/" className="d-lg-block d-none">
-            <img
+            {/* <img
               src="https://cdn.worldvectorlogo.com/logos/lorem-lorem.svg"
               className="logo"
               alt="Medicare Admin Template"
-            />
+            /> */}
           </a>
           <a href="/" className="d-lg-none d-md-block">
             <img
@@ -421,7 +442,7 @@ const Topbar = () => {
                 <h6 className="m-0">James Bruton</h6>
               </div>
               <div className="mx-3 my-2 d-grid">
-                <a href="/" className="btn btn-danger">
+                <a href="#" onClick={logoutHandler} className="btn btn-danger">
                   Logout
                 </a>
               </div>

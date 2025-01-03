@@ -322,16 +322,6 @@ const Dashboard = () => {
               {/* Row ends */}
               {/* Row starts */}
               <div className="row gx-3">
-                <div className="col-xxl-12 col-sm-12">
-                  <div className="card mb-3">
-                    <div className="card-header">
-                      <h5 className="card-title">Available Beds</h5>
-                    </div>
-                    <div className="card-body">
-                      <div id="availableBeds" />
-                    </div>
-                  </div>
-                </div>
                 <div className="col-xxl-6 col-sm-12">
                   <div className="card mb-3">
                     <div className="card-header">

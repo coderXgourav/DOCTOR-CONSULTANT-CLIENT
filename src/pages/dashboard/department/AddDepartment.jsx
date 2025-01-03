@@ -1,9 +1,59 @@
 import Sidebar from "../../../components/Sidebar";
 import Topbar from "../../../components/Topbar";
+import { postAPI } from "../../../API/commonAPI";
+import { useState } from "react";
+import { Spin } from "antd";
+import { notification } from "antd";
 
 const AddDepartment = () => {
+  const [api, contextHolder] = notification.useNotification();
+  const [department, setDepartment] = useState({ name: "", desc: "" });
+  const [btn, setBtn] = useState("Add Department");
+  const [loading, setLoading] = useState(false);
+  const textChangeHandler = (e) => {
+    const { name, value } = e.target;
+    if (name == "name") {
+      setDepartment({ ...department, name: value });
+    } else {
+      setDepartment({ ...department, desc: value });
+    }
+  };
+
+  const departmentFormHandler = async (event) => {
+    event.preventDefault();
+    setBtn("Please Wait..");
+    setLoading(true);
+    const result = await postAPI("department/add", department);
+    const { status, message, desc } = result;
+    openNotification(status, message, desc);
+    console.log(status);
+
+    if (status == true) {
+      setDepartment({ ...department, name: "", desc: "" });
+    }
+
+    setBtn("Add Department");
+    setLoading(false);
+  };
+
+  const openNotification = (status, title, desc) => {
+    if (status) {
+      api.success({
+        message: title,
+        description: desc,
+      });
+    } else {
+      api.error({
+        message: title,
+        description: desc,
+      });
+    }
+  };
+
   return (
     <>
+      {contextHolder}
+
       <div className="page-wrapper">
         {/* App header starts */}
         <Topbar />
@@ -45,75 +95,86 @@ const AddDepartment = () => {
               </div>
               {/* Sales stats ends */}
             </div>
+
             {/* App Hero header ends */}
             {/* App body starts */}
-            <div className="app-body">
-              {/* Row starts */}
-              <div className="row gx-3">
-                <div className="col-sm-12">
-                  <div className="card">
-                    <div className="card-header">
-                      <h5 className="card-title">Add Department</h5>
-                    </div>
-                    <div className="card-body">
-                      {/* Row starts */}
-                      <div className="row gx-3">
-                        <div>
-                          <div className="col-xxl-6 col-lg-6 col-sm-6">
-                            <div className="mb-3">
-                              <label className="form-label" htmlFor="a1">
-                                Department Name
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="a1"
-                                placeholder="Enter Department Name"
-                              />
-                            </div>
-                          </div>
+            <Spin spinning={loading} size="large">
+              <form onSubmit={departmentFormHandler}>
+                <div className="app-body">
+                  {/* Row starts */}
+                  <div className="row gx-3">
+                    <div className="col-sm-12">
+                      <div className="card">
+                        <div className="card-header d-flex align-items-center justify-content-between">
+                          <h5 className="card-title">Add New Department</h5>
+                          <a
+                            href="/view-department"
+                            className="btn btn-primary ms-auto"
+                          >
+                            View Department
+                          </a>
                         </div>
+                        <div className="card-body">
+                          {/* Row starts */}
+                          <div className="row gx-3">
+                            <div>
+                              <div className="col-xxl-6 col-lg-6 col-sm-6">
+                                <div className="mb-3">
+                                  <label className="form-label" htmlFor="a1">
+                                    Department Name
+                                  </label>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    id="a1"
+                                    name="name"
+                                    value={department.name}
+                                    placeholder="Enter Department Name"
+                                    onChange={textChangeHandler}
+                                  />
+                                </div>
+                              </div>
+                            </div>
 
-                        <div className="col-sm-6">
-                          <div className="mb-3">
-                            <label className="form-label" htmlFor="a7">
-                              Description
-                            </label>
-                            <textarea
-                              className="form-control"
-                              id="a7"
-                              placeholder="Enter message"
-                              rows={3}
-                              defaultValue={""}
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <div className="col-sm-6">
-                            <div className="d-flex gap-2 justify-content-end">
-                              <a
-                                href="departments-list.html"
-                                className="btn btn-outline-secondary"
-                              >
-                                Cancel
-                              </a>
-                              <a
-                                href="departments-list.html"
-                                className="btn btn-primary"
-                              >
-                                Add Department
-                              </a>
+                            <div className="col-sm-6">
+                              <div className="mb-3">
+                                <label className="form-label" htmlFor="a7">
+                                  Description
+                                </label>
+                                <textarea
+                                  className="form-control"
+                                  id="a7"
+                                  placeholder="Enter message"
+                                  value={department.desc}
+                                  rows={3}
+                                  defaultValue={""}
+                                  name="desc"
+                                  onChange={textChangeHandler}
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <div className="col-sm-6">
+                                <div className="d-flex gap-2 justify-content-end">
+                                  <a className="btn btn-outline-secondary">
+                                    Cancel
+                                  </a>
+                                  <button className="btn btn-primary">
+                                    {btn}
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           </div>
+                          {/* Row ends */}
                         </div>
                       </div>
-                      {/* Row ends */}
                     </div>
                   </div>
+                  {/* Row ends */}
                 </div>
-              </div>
-              {/* Row ends */}
-            </div>
+              </form>
+            </Spin>
             {/* App body ends */}
             {/* App footer starts */}
 

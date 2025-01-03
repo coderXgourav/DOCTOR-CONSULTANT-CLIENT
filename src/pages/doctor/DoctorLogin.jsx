@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { login } from "../API/commonAPI";
+
 import { Spin } from "antd";
 
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-const Login = () => {
+import { login } from "../../API/commonAPI";
+const DoctorLogin = () => {
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("doctorToken");
     if (token) {
       const decode = jwtDecode(token);
       if (decode) {
-        location.href = "/dashboard";
+        location.href = "/doctor/dashboard";
       }
     }
   }, [0]);
@@ -44,15 +45,15 @@ const Login = () => {
       setLoading(false);
       setBtn("Login");
     } else {
-      const response = await login("login", {
+      const response = await login("doctor/login", {
         email_username: username,
         password,
       });
       const { status, message, desc, token } = response;
       if (status) {
-        localStorage.setItem("token", token);
+        localStorage.setItem("doctorToken", token);
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/doctor/dashboard");
         }, 1500);
       }
       openNotification(status, message, desc);
@@ -71,7 +72,8 @@ const Login = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-          background: "#3795ff",
+
+          background: "rgb(53 55 57)",
         }}
       >
         <Spin spinning={loading} size="large">
@@ -83,10 +85,10 @@ const Login = () => {
                   alt="Bootstrap Gallery"
                 /> */}
               </a>
-              <h4 className="mb-4">Admin Login</h4>
+              <h4 className="mb-4">Doctor Login</h4>
               <div className="mb-3">
                 <label className="form-label" htmlFor="email">
-                  Your email <span className="text-danger">*</span>
+                  Your email or Username <span className="text-danger">*</span>
                 </label>
                 <input
                   type="text"
@@ -126,9 +128,9 @@ const Login = () => {
                 <button type="submit" className="btn btn-primary">
                   {btn}
                 </button>
-                {/* <a href="#" className="btn btn-secondary">
+                <a href="/doctor/signup" className="btn btn-secondary">
                   Not registered? Signup
-                </a> */}
+                </a>
               </div>
             </div>
           </form>
@@ -138,4 +140,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default DoctorLogin;
