@@ -18,7 +18,7 @@ const login = async (url, data) => {
     const { status, message, desc, token } = result.data;
     return { status, message, desc, token };
   } catch (error) {
-    if (error?.response?.data?.status === false) {
+    if (error?.response?.data) {
       const { status, message, desc } = error.response.data;
       return { status, message, desc };
     } else {
