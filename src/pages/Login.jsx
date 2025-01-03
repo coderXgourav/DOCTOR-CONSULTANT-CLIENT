@@ -37,6 +37,8 @@ const Login = () => {
     setBtn("Please wait..");
     if (!username || !password) {
       openNotification(false, "Fill Details", "Please fill all the fields");
+    setBtn("Login");
+    setLoading(false);
     } else {
       const response = await login("login", "POST", {
         email_username: username,
