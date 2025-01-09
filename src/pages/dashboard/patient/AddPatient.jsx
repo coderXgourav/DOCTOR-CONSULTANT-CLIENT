@@ -16,6 +16,7 @@ const AddPatient = () => {
     mobile: "",
     email: "",
     address: "",
+    password: "",
   });
 
   // const [success, setSuccess] = useState("");
@@ -66,6 +67,7 @@ const AddPatient = () => {
         mobile: "",
         email: "",
         address: "",
+        password: "",
       });
 
       // window.location.href = "/view-patients";
@@ -82,8 +84,7 @@ const AddPatient = () => {
       <div className="main-container">
         <Sidebar />
         <div className="app-body">
-          {/* <div className="row gx-3"> */}
-          <div className="card ">
+          <div className="card">
             <div className="app-container">
               <div className="app-hero-header d-flex align-items-center">
                 <ol className="breadcrumb">
@@ -110,6 +111,7 @@ const AddPatient = () => {
                         value={formData.first_name}
                         onChange={handleChange}
                         className="form-control"
+                        placeholder="Enter First Name"
                         required
                       />
                     </div>
@@ -121,6 +123,7 @@ const AddPatient = () => {
                         value={formData.last_name}
                         onChange={handleChange}
                         className="form-control"
+                        placeholder="Enter Last Name"
                         required
                       />
                     </div>
@@ -147,6 +150,7 @@ const AddPatient = () => {
                         value={formData.age}
                         onChange={handleChange}
                         className="form-control"
+                        placeholder="Enter Age"
                         min={0}
                         max={150}
                         required
@@ -180,6 +184,7 @@ const AddPatient = () => {
                         value={formData.treatment}
                         onChange={handleChange}
                         className="form-control"
+                        placeholder="Enter Treatment"
                         required
                       />
                     </div>
@@ -191,6 +196,7 @@ const AddPatient = () => {
                         value={formData.mobile}
                         onChange={handleChange}
                         className="form-control"
+                        placeholder="Enter Mobile Number"
                         required
                       />
                     </div>
@@ -202,22 +208,34 @@ const AddPatient = () => {
                         value={formData.email}
                         onChange={handleChange}
                         className="form-control"
+                        placeholder="Enter Email"
                         required
                       />
                     </div>
-                    <div className="col-sm-12">
+                    <div className="col-sm-12 mb-3">
+                      <label>Password</label>
+                      <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="form-control"
+                        placeholder="Enter Password"
+                        required
+                      />
+                    </div>
+                    <div className="col-sm-12 mb-3">
                       <label>Address</label>
                       <textarea
                         name="address"
                         value={formData.address}
                         onChange={handleChange}
                         className="form-control"
+                        placeholder="Enter Address"
                         required
                       ></textarea>
                     </div>
                   </div>
-                  {/* {error && <p className="text-danger">{error}</p>}
-                  {success && <p className="text-success">{success}</p>} */}
                   <button type="submit" className="btn btn-primary mt-3">
                     Add Patient
                   </button>
@@ -225,7 +243,6 @@ const AddPatient = () => {
               </div>
             </div>
           </div>
-          {/* </div> */}
         </div>
       </div>
     </div>
