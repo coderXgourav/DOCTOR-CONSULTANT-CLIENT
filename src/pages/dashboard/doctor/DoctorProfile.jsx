@@ -1,10 +1,62 @@
+import axios from "axios";
 import Sidebar from "../../../components/Sidebar";
 import Topbar from "../../../components/Topbar";
+import { useEffect, useState } from "react";
+import { notification } from "antd";
+import { useParams } from "react-router-dom";
 
 const DoctorProfile = () => {
+  const [api, contextHolder] = notification.useNotification();
+  const [doctor, setDoctor] = useState({
+    firstName: "loading...",
+    lastName: "",
+  });
+
+  const openNotification = (status, title, desc) => {
+    if (status == true) {
+      api.success({
+        message: title,
+        description: desc,
+      });
+    } else {
+      api.error({
+        message: title,
+        description: desc,
+      });
+    }
+  };
+  const params = useParams();
+  const { doctorId } = params;
+  useEffect(() => {
+    fetchDoctor();
+  }, [0]);
+
+  const fetchDoctor = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/admin/doctor/${doctorId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const { doctor } = res.data;
+      setDoctor(doctor);
+    } catch (error) {
+      if (error.response.data) {
+        const { status, message, desc } = error.response.data;
+        openNotification(status, message, desc);
+      } else {
+        openNotification(false, "Incorrect Id", "Please check the doctor id");
+      }
+    }
+  };
+
   return (
     <>
       <div className="page-wrapper">
+        {contextHolder}
         {/* App header starts */}
         <Topbar />
         {/* App header ends */}
@@ -57,7 +109,7 @@ const DoctorProfile = () => {
                       <div className="row gx-3">
                         <div className="col-sm-3">
                           <img
-                            src="assets/images/user2.png"
+                            src="/assets/images/user2.png"
                             className="img-fluid rounded-3"
                             alt="Medical Dashboard"
                           />
@@ -65,7 +117,9 @@ const DoctorProfile = () => {
                         <div className="col-sm-9">
                           <div className="text-white mt-3">
                             <h6>Hello I am,</h6>
-                            <h3>Dr. Jessika Linda</h3>
+                            <h3>
+                              {doctor?.firstName + " " + doctor?.lastName}
+                            </h3>
                             <h6>
                               MBBS, MS - General Surgery, General Physician
                             </h6>
@@ -189,7 +243,7 @@ const DoctorProfile = () => {
                           <div className="d-grid gap-5">
                             <div className="d-flex">
                               <img
-                                src="assets/images/patient1.png"
+                                src="/assets/images/patient1.png"
                                 className="img-4x rounded-2"
                                 alt="Medical Admin Template"
                               />
@@ -218,7 +272,7 @@ const DoctorProfile = () => {
                             </div>
                             <div className="d-flex">
                               <img
-                                src="assets/images/patient2.png"
+                                src="/assets/images/patient2.png"
                                 className="img-4x rounded-2"
                                 alt="Medical Admin Template"
                               />
@@ -247,7 +301,7 @@ const DoctorProfile = () => {
                             </div>
                             <div className="d-flex">
                               <img
-                                src="assets/images/patient3.png"
+                                src="/assets/images/patient3.png"
                                 className="img-4x rounded-2"
                                 alt="Medical Admin Template"
                               />
@@ -364,7 +418,7 @@ const DoctorProfile = () => {
                                   data-bs-interval={10000}
                                 >
                                   <img
-                                    src="assets/images/award/award.svg"
+                                    src="/assets/images/award/award.svg"
                                     className="d-block w-100"
                                     alt="Medical Templates"
                                   />
@@ -374,7 +428,7 @@ const DoctorProfile = () => {
                                   data-bs-interval={5000}
                                 >
                                   <img
-                                    src="assets/images/award/award1.svg"
+                                    src="/assets/images/award/award1.svg"
                                     className="d-block w-100"
                                     alt="Medical Templates"
                                   />
@@ -384,7 +438,7 @@ const DoctorProfile = () => {
                                   data-bs-interval={2500}
                                 >
                                   <img
-                                    src="assets/images/award/award2.svg"
+                                    src="/assets/images/award/award2.svg"
                                     className="d-block w-100"
                                     alt="Medical Templates"
                                   />

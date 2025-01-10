@@ -20,7 +20,7 @@ const AdminRoute = () => {
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/add-doctor" element={<AddDoctor />}></Route>
           <Route path="/view-doctors" element={<ViewDoctor />}></Route>
-          <Route path="/doctor" element={<DoctorProfile />}></Route>
+          <Route path="/doctor/:doctorId" element={<DoctorProfile />}></Route>
           <Route path="/view-patients" element={<ViewPatient />}></Route>
           <Route path="/add-patient" element={<AddPatient />}></Route>
           <Route path="/add-department" element={<AddDepartment />}></Route>

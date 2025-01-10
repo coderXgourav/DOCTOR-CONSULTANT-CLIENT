@@ -177,7 +177,7 @@ const ViewDoctor = () => {
                                         <i className="ri-edit-box-line" />
                                       </a>
                                       <a
-                                        href="/doctor"
+                                        href={`/doctor/${doctor._id}`}
                                         className="btn btn-outline-info btn-sm"
                                         data-bs-toggle="tooltip"
                                         data-bs-placement="top"
