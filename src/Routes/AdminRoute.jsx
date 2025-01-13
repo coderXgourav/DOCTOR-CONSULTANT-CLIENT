@@ -8,6 +8,7 @@ import ViewPatient from "../pages/dashboard/patient/ViewPatient";
 import AddPatient from "../pages/dashboard/patient/AddPatient";
 import AddDepartment from "../pages/dashboard/department/AddDepartment";
 import ViewDepartment from "../pages/dashboard/department/ViewDepartment";
+import DepartmentEdit from "../pages/dashboard/department/DepartmentEdit";
 // import Soon from "../pages/Soon";
 
 const AdminRoute = () => {
@@ -25,6 +26,10 @@ const AdminRoute = () => {
           <Route path="/add-patient" element={<AddPatient />}></Route>
           <Route path="/add-department" element={<AddDepartment />}></Route>
           <Route path="/view-department" element={<ViewDepartment />}></Route>
+          <Route
+            path="/edit-department/:departmentId"
+            element={<DepartmentEdit />}
+          ></Route>
 
           {/* <Route path="*" element={<Soon />}></Route> */}
         </Routes>

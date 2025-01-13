@@ -192,7 +192,7 @@ const ViewDepartment = () => {
                                         <i className="ri-delete-bin-line" />
                                       </button>
                                       <a
-                                        href="edit-department.html"
+                                        href={`/edit-department/${item._id}`}
                                         className="btn btn-outline-success btn-sm rounded-5"
                                         data-bs-toggle="tooltip"
                                         data-bs-placement="top"

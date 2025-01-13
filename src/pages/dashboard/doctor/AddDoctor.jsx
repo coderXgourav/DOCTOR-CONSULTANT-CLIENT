@@ -63,153 +63,21 @@ const AddDoctor = () => {
 
   const formChange = (event) => {
     const { name, value } = event.target;
-    switch (name) {
-      case "firstName":
-        setDoctor({ ...doctor, firstName: value });
-        break;
-      case "lastName":
-        setDoctor({ ...doctor, lastName: value });
-        break;
-      case "age":
-        setDoctor({ ...doctor, age: value });
-        break;
-      case "gender":
-        setDoctor({ ...doctor, gender: value });
-        break;
-      case "email":
-        setDoctor({ ...doctor, email: value });
-        break;
-      case "number":
-        setDoctor({ ...doctor, mobile: value });
-        break;
-      case "image":
-        setDoctor({ ...doctor, photo: value });
-        break;
-      case "specification":
-        setDoctor({ ...doctor, specialization: value });
-        break;
-      case "experience":
-        setDoctor({ ...doctor, experience: value });
-        break;
-      case "qualifications":
-        setDoctor({ ...doctor, qualifications: value });
-        break;
-      case "license":
-        setDoctor({ ...doctor, license: value });
-        break;
-      case "password":
-        setDoctor({ ...doctor, password: value });
-        break;
-      case "username":
-        setDoctor({ ...doctor, username: value });
-        break;
-      case "about":
-        setDoctor({ ...doctor, about: value });
-        break;
-      case "status":
-        setDoctor({ ...doctor, status: value });
-        break;
-      case "sun1":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { sun: { start: value } },
-        });
-        break;
-      case "sun2":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { sun: { end: value } },
-        });
-        break;
-      case "mon1":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { mon: { start: value } },
-        });
-        break;
-      case "mon2":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { mon: { end: value } },
-        });
-        break;
-      case "tue1":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { tue: { start: value } },
-        });
-        break;
-      case "tue2":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { tue: { end: value } },
-        });
-        break;
-      case "wed1":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { wed: { start: value } },
-        });
-        break;
-      case "wed2":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { wed: { end: value } },
-        });
-        break;
-      case "thu1":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { thu: { start: value } },
-        });
-        break;
-      case "thu2":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { thu: { end: value } },
-        });
-        break;
-      case "fri1":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { fri: { start: value } },
-        });
-        break;
-      case "fri2":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { fri: { end: value } },
-        });
-        break;
-      case "sat1":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { sat: { start: value } },
-        });
-        break;
-      case "sat2":
-        setDoctor({
-          ...doctor,
-          ...doctor.schedule,
-          schedule: { fri: { end: value } },
-        });
-        break;
 
-      default:
-        break;
+    if (name.includes("1") || name.includes("2")) {
+      const [day, time] = name.match(/(\w+)(\d)/).slice(1);
+      setDoctor((prev) => ({
+        ...prev,
+        schedule: {
+          ...prev.schedule,
+          [day]: {
+            ...prev.schedule[day],
+            [time === "1" ? "start" : "end"]: value,
+          },
+        },
+      }));
+    } else {
+      setDoctor((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -494,7 +362,7 @@ const AddDoctor = () => {
                                         onChange={formChange}
                                         id="a6"
                                         placeholder="Enter Mobile Number"
-                                        name="number"
+                                        name="mobile"
                                       />
                                     </div>
                                   </div>
@@ -567,14 +435,14 @@ const AddDoctor = () => {
                                   <div className="mb-3">
                                     <label
                                       className="form-label"
-                                      htmlFor="specification"
+                                      htmlFor="specialization"
                                     >
                                       Select Specification
                                     </label>
                                     <select
                                       className="form-select"
-                                      id="specification"
-                                      name="specification"
+                                      id="specialization"
+                                      name="specialization"
                                       onChange={formChange}
                                     >
                                       <option value="">
@@ -583,7 +451,7 @@ const AddDoctor = () => {
                                       {data.map((department) => (
                                         <option
                                           key={department._id}
-                                          value={department.department}
+                                          value={department._id}
                                         >
                                           {department.department}
                                         </option>

@@ -36,7 +36,7 @@ const Sidebar = () => {
       {/* Sidebar profile starts */}
       <div className="sidebar-profile">
         <img
-          src="//assets/images/user6.png"
+          src="/assets/images/user6.png"
           className="img-shadow img-3x me-3 rounded-5"
           alt="Hospital Admin Templates"
         />

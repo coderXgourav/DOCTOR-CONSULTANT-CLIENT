@@ -51,12 +51,12 @@ const Topbar = () => {
     <>
       <Helmet>
         <title>Doctor Consultant</title>
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/vendor/apex/custom/home/available-beds.js"></script>
-        <script src="assets/vendor/apex/custom/home/earnings.js"></script>
-        <script src="assets/vendor/apex/custom/home/gender-age.js"></script>
-        <script src="assets/vendor/apex/custom/home/claims.js"></script>
-        <script src="assets/js/custom.js"></script>
+        <script src="/assets/js/jquery.min.js"></script>
+        <script src="/assets/vendor/apex/custom/home/available-beds.js"></script>
+        <script src="/assets/vendor/apex/custom/home/earnings.js"></script>
+        <script src="/assets/vendor/apex/custom/home/gender-age.js"></script>
+        <script src="/assets/vendor/apex/custom/home/claims.js"></script>
+        <script src="/assets/js/custom.js"></script>
       </Helmet>
 
       <div className="app-header d-flex align-items-center">
@@ -82,7 +82,7 @@ const Topbar = () => {
           </a>
           <a href="/" className="d-lg-none d-md-block">
             <img
-              src="assets/images/logo-sm.svg"
+              src="/assets/images/logo-sm.svg"
               className="logo"
               alt="Medicare Admin Template"
             />
@@ -114,7 +114,7 @@ const Topbar = () => {
                 aria-expanded="false"
               >
                 <img
-                  src="assets/images/flags/1x1/fr.svg"
+                  src="/assets/images/flags/1x1/fr.svg"
                   className="header-country-flag"
                   alt="Bootstrap Dashboards"
                 />
@@ -123,31 +123,31 @@ const Topbar = () => {
                 <div className="country-container">
                   <a href="/" className="py-2">
                     <img
-                      src="assets/images/flags/1x1/us.svg"
+                      src="/assets/images/flags/1x1/us.svg"
                       alt="Admin Panel"
                     />
                   </a>
                   <a href="/" className="py-2">
                     <img
-                      src="assets/images/flags/1x1/in.svg"
+                      src="/assets/images/flags/1x1/in.svg"
                       alt="Admin Panels"
                     />
                   </a>
                   <a href="/" className="py-2">
                     <img
-                      src="assets/images/flags/1x1/br.svg"
+                      src="/assets/images/flags/1x1/br.svg"
                       alt="Admin Dashboards"
                     />
                   </a>
                   <a href="/" className="py-2">
                     <img
-                      src="assets/images/flags/1x1/tr.svg"
+                      src="/assets/images/flags/1x1/tr.svg"
                       alt="Admin Templatess"
                     />
                   </a>
                   <a href="/" className="py-2">
                     <img
-                      src="assets/images/flags/1x1/gb.svg"
+                      src="/assets/images/flags/1x1/gb.svg"
                       alt="Google Admin"
                     />
                   </a>
@@ -184,7 +184,7 @@ const Topbar = () => {
                             <div className="d-flex align-items-center mb-2">
                               <div className="flex-shrink-0">
                                 <img
-                                  src="assets/images/products/1.jpg"
+                                  src="/assets/images/products/1.jpg"
                                   className="img-shadow img-3x rounded-1"
                                   alt="Hospital Admin Templates"
                                 />
@@ -207,7 +207,7 @@ const Topbar = () => {
                             <div className="d-flex align-items-center mb-2">
                               <div className="flex-shrink-0">
                                 <img
-                                  src="assets/images/products/2.jpg"
+                                  src="/assets/images/products/2.jpg"
                                   className="img-shadow img-3x rounded-1"
                                   alt="Hospital Admin Templates"
                                 />
@@ -230,7 +230,7 @@ const Topbar = () => {
                             <div className="d-flex align-items-center mb-2">
                               <div className="flex-shrink-0">
                                 <img
-                                  src="assets/images/products/8.jpg"
+                                  src="/assets/images/products/8.jpg"
                                   className="img-shadow img-3x rounded-1"
                                   alt="Hospital Admin Templates"
                                 />
@@ -253,7 +253,7 @@ const Topbar = () => {
                             <div className="d-flex align-items-center mb-2">
                               <div className="flex-shrink-0">
                                 <img
-                                  src="assets/images/products/9.jpg"
+                                  src="/assets/images/products/9.jpg"
                                   className="img-shadow img-3x rounded-1"
                                   alt="Hospital Admin Templates"
                                 />
@@ -368,7 +368,7 @@ const Topbar = () => {
                   <div className="p-3">
                     <div className="d-flex py-2">
                       <img
-                        src="assets/images/user3.png"
+                        src="/assets/images/user3.png"
                         className="img-shadow img-3x me-3 rounded-5"
                         alt="Hospital Admin Templates"
                       />
@@ -382,7 +382,7 @@ const Topbar = () => {
                     </div>
                     <div className="d-flex py-2">
                       <img
-                        src="assets/images/user1.png"
+                        src="/assets/images/user1.png"
                         className="img-shadow img-3x me-3 rounded-5"
                         alt="Hospital Admin Templates"
                       />
@@ -394,7 +394,7 @@ const Topbar = () => {
                     </div>
                     <div className="d-flex py-2">
                       <img
-                        src="assets/images/user4.png"
+                        src="/assets/images/user4.png"
                         className="img-shadow img-3x me-3 rounded-5"
                         alt="Hospital Admin Templates"
                       />
